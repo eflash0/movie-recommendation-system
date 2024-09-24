@@ -9,5 +9,5 @@ import com.movierecommendationsystem.movierecommendationsystem_backend.repositor
 public class RecommendationService {
     @Autowired
     private InteractionRepository interactionRepository;
-    
+    private final String pythonUrl = "http://localhost:5000";
 }

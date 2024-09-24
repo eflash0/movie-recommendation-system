@@ -1,3 +1,6 @@
 spring:
   application:
     name: movierecommendationsystem-backend
+
+tmdb:
+  api.key: YOUR_TMDB_API_KEY
