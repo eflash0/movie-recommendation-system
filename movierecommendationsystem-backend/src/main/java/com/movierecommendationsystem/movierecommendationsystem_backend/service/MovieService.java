@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.GenreResponse;
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Genre;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Movie;
@@ -26,16 +27,16 @@ public class MovieService {
         this.restTemplate = restTemplate;
     }
 
-    public List<Movie> getPopularMovies(int page){
+    public List<MovieDto> getPopularMovies(int page){
         String url = String.format(POPULAR_MOVIES_URL,apiKey,page);
         TMDbResponse response = restTemplate.getForObject(url,TMDbResponse.class);
-        return response.getMovies();
+        return response.getResults();
     }
 
-    public List<Movie> searchMovies(String query, int page) {
+    public List<MovieDto> searchMovies(String query, int page) {
         String url = String.format(SEARCH_MOVIE_URL, apiKey, query, page);
         TMDbResponse response = restTemplate.getForObject(url, TMDbResponse.class);
-        return response.getMovies();
+        return response.getResults();
     }
 
     public Movie getMovieDetails(Long movieId) {

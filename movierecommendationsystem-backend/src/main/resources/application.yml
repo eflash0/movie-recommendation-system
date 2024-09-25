@@ -21,4 +21,4 @@ server:
     include-message: always
 
 tmdb:
-  api.key: 53ba14ce81850527941c6abda2c9349c
+  api.key: 1990523cf32528efb6e21f892955ba94
