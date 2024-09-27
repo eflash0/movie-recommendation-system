@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -12,6 +12,13 @@ export class MovieService {
 
   getPopularMovies(page : number) : Observable<any>{
     const url = `${this.baseUrl}?page=${page}`;
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    return this.http.get<any>(url);
+  }
+
+  getMovieDetails(id:number) : Observable<any>{
+    const url = `${this.baseUrl}/${id}`;
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
     return this.http.get<any>(url);
   }
 }

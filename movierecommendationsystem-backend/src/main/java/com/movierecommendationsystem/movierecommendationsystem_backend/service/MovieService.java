@@ -1,5 +1,7 @@
 package com.movierecommendationsystem.movierecommendationsystem_backend.service;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -7,8 +9,10 @@ import org.springframework.web.client.RestTemplate;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.GenreResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbResponse;
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbVideosResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Genre;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Movie;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MovieVideo;
 
 import java.util.List;
 
@@ -20,6 +24,7 @@ public class MovieService {
     private static final String SEARCH_MOVIE_URL = "https://api.themoviedb.org/3/search/movie?api_key=%s&query=%s&page=%d";
     private static final String MOVIE_DETAILS_URL = "https://api.themoviedb.org/3/movie/%d?api_key=%s";
     private static final String MOVIE_GENRES_URL = "https://api.themoviedb.org/3/genre/movie/list?api_key=%s";
+    private static final String MOVIE_TRAILER = "https://api.themoviedb.org/3/movie/%d/videos?api_key=%s";
     
     private final RestTemplate restTemplate;
 
@@ -39,14 +44,25 @@ public class MovieService {
         return response.getResults();
     }
 
-    public Movie getMovieDetails(Long movieId) {
+    public MovieDto getMovieDetails(Long movieId) {
         String url = String.format(MOVIE_DETAILS_URL, movieId, apiKey);
-        return restTemplate.getForObject(url, Movie.class);
+        return restTemplate.getForObject(url, MovieDto.class);
     }
 
     public List<Genre> getMovieGenres() {
         String url = String.format(MOVIE_GENRES_URL, apiKey);
         GenreResponse response = restTemplate.getForObject(url, GenreResponse.class);
         return response.getGenres();
+    }
+
+    public List<MovieVideo> getMovieTrailer(Long id){
+        String url = String.format(MOVIE_TRAILER,id,apiKey);
+        TMDbVideosResponse response = restTemplate.getForObject(url, TMDbVideosResponse.class);
+        if(response != null){
+            return response.getResults().stream().filter(video -> 
+            video.getType().equalsIgnoreCase("trailer") && video.getSite().equalsIgnoreCase("youtube"))
+            .toList();
+        }
+        return List.of();
     }
 }
