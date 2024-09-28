@@ -55,14 +55,14 @@ public class MovieService {
         return response.getGenres();
     }
 
-    public List<MovieVideo> getMovieTrailer(Long id){
+    public MovieVideo getMovieTrailer(Long id){
         String url = String.format(MOVIE_TRAILER,id,apiKey);
         TMDbVideosResponse response = restTemplate.getForObject(url, TMDbVideosResponse.class);
         if(response != null){
             return response.getResults().stream().filter(video -> 
             video.getType().equalsIgnoreCase("trailer") && video.getSite().equalsIgnoreCase("youtube"))
-            .toList();
+            .findFirst().orElse(null);
         }
-        return List.of();
+        return null;
     }
 }

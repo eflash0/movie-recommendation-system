@@ -21,4 +21,9 @@ export class MovieService {
     const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
     return this.http.get<any>(url);
   }
+
+  getMovieTrailer(id:number) : Observable<any>{
+    const url = `${this.baseUrl}/${id}/trailer`;
+    return this.http.get<any>(url);
+  }
 }

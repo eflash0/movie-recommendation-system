@@ -32,9 +32,9 @@ public class MovieController {
         return ResponseEntity.ok(movie);
     }
 
-    @GetMapping("/{id}/trailers")
-    public ResponseEntity<List<MovieVideo>> getTrailers(@PathVariable Long id){
-        List<MovieVideo> trailers = movieService.getMovieTrailer(id);
-        return ResponseEntity.ok(trailers);
+    @GetMapping("/{id}/trailer")
+    public ResponseEntity<MovieVideo> getTrailers(@PathVariable Long id){
+        MovieVideo trailer = movieService.getMovieTrailer(id);
+        return ResponseEntity.ok(trailer);
     }
 }

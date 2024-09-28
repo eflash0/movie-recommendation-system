@@ -1,6 +1,9 @@
 package com.movierecommendationsystem.movierecommendationsystem_backend.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Genre;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,4 +34,7 @@ public class MovieDto {
 
     @JsonProperty("vote_average")
     private Double voteAverage;
+
+    @JsonProperty("genres")
+    private List<Genre> genres;
 }
