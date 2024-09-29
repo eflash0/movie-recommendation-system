@@ -1,7 +1,5 @@
 package com.movierecommendationsystem.movierecommendationsystem_backend.service;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,7 +9,6 @@ import com.movierecommendationsystem.movierecommendationsystem_backend.dto.Movie
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbVideosResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Genre;
-import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Movie;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MovieVideo;
 
 import java.util.List;

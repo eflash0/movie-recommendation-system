@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Interaction;
-import com.movierecommendationsystem.movierecommendationsystem_backend.entity.User;
 
 @Repository
 public interface InteractionRepository extends JpaRepository<Interaction,Long> {

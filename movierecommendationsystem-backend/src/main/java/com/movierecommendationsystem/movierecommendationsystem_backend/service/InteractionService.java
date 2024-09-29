@@ -20,6 +20,7 @@ public class InteractionService {
     private InteractionRepository interactionRepository;
     @Autowired
     private MovieService movieService;
+
     public Interaction rateMovie(Long userId,Long movieId,double rating){
         User user = userRepository.findById(movieId).orElseThrow(() -> 
         new IllegalArgumentException("user not found")); 
@@ -40,14 +41,14 @@ public class InteractionService {
         return interactionRepository.save(interaction);
     }
 
-    public Interaction removeFromWatchList(Long userId,Long movieId){
+    public void removeFromWatchList(Long userId,Long movieId){
         User user = userRepository.findById(userId).orElseThrow(() -> 
         new IllegalArgumentException("user not found")); 
         Interaction interaction = interactionRepository.findByUserAndMovieId(user.getUserId(), movieId).orElse(new Interaction());
         interaction.setUser(user);
         interaction.setMovieId(movieId);
         interaction.setWatchLater(false);
-        return interactionRepository.save(interaction);
+        interactionRepository.deleteById(interaction.getInteractionId());
     }
 
     public Interaction addToFavorite(Long userId,Long movieId){
@@ -60,7 +61,7 @@ public class InteractionService {
         return interactionRepository.save(interaction);
     }
 
-    public List<MovieDto> getWatchLaterMovies(Long userId){
+    public List<MovieDto> getWatchListMovies(Long userId){
         User user = userRepository.findById(userId).orElseThrow(() -> 
         new IllegalArgumentException("user not found")); 
         List<Interaction> interactions = interactionRepository.findByUserIdAndIsWatchLaterTrue(user.getUserId());
@@ -68,14 +69,14 @@ public class InteractionService {
         .toList();
     }
 
-    public Interaction removeFromFavorite(Long userId,Long movieId){
+    public void removeFromFavorite(Long userId,Long movieId){
         User user = userRepository.findById(userId).orElseThrow(() -> 
         new IllegalArgumentException("user not found")); 
         Interaction interaction = interactionRepository.findByUserAndMovieId(user.getUserId(), movieId).orElse(new Interaction());
         interaction.setUser(user);
         interaction.setMovieId(movieId);
         interaction.setFavorite(false);
-        return interactionRepository.save(interaction);
+        interactionRepository.deleteById(interaction.getInteractionId());
     }
 
     public List<MovieDto> getFavoriteMovies(Long userId){
