@@ -23,8 +23,8 @@ public class Interaction {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
+    private Long movieId;
     private double rating;
+    private boolean isFavorite;
+    private boolean isWatchLater;
 }
