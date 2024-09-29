@@ -37,7 +37,7 @@ public class InteractionController {
     }    
 
     @GetMapping("{userId}/watchlist")
-    public ResponseEntity<List<MovieDto>> watchLater(@PathVariable Long userId){
+    public ResponseEntity<List<MovieDto>> watchList(@PathVariable Long userId){
         List<MovieDto> movies = interactionService.getWatchListMovies(userId);
         return ResponseEntity.ok(movies);
     }
@@ -69,7 +69,7 @@ public class InteractionController {
         return ResponseEntity.ok(movies);
     }
 
-    @DeleteMapping("{userId}/{movieId}/watchlist")
+    @DeleteMapping("{userId}/{movieId}/favorite")
     public ResponseEntity<Void> removeFromFavorite(@PathVariable Long userId,
     @PathVariable Long movieId){
         interactionService.removeFromFavorite(userId, movieId);
