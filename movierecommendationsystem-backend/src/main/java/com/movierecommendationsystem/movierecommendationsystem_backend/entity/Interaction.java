@@ -26,5 +26,5 @@ public class Interaction {
     private Long movieId;
     private double rating;
     private boolean isFavorite;
-    private boolean isWatchLater;
+    private boolean isWatchList;
 }
