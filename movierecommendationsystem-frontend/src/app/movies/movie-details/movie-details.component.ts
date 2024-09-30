@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TrailerDialogComponent } from '../trailer-dialog/trailer-dialog.component';
+import { InteractionService } from '../../service/interaction.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -20,7 +21,7 @@ export class MovieDetailsComponent implements OnInit {
   userRating : number = 0;
   trailer : any;
   constructor(private movieService : MovieService,private route : ActivatedRoute,
-    private dialog : MatDialog
+    private dialog : MatDialog,private interactionService : InteractionService
   ){ }
   ngOnInit(): void {
       const movieId = +this.route.snapshot.paramMap.get('id')!;
@@ -34,7 +35,7 @@ export class MovieDetailsComponent implements OnInit {
       error => {console.error('error fetching movie details',error);}
     );
   }
-  submitRating(){
+  rateMovie(){
 
   }
   addToWatchLater(){

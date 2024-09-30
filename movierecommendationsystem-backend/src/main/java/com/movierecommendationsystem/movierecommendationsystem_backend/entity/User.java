@@ -36,6 +36,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String username;
     @Column(nullable = false)
+    private String email;
+    @Column(nullable = false)
     private String password;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Interaction> Interactions = new ArrayList<>();
