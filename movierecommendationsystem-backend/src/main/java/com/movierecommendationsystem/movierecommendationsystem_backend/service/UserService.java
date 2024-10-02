@@ -31,6 +31,20 @@ public class UserService implements UserDetailsService {
         new UsernameNotFoundException("user not found"));
     }
 
+    public UserDto findByUsername(String username){
+        User user = userRepository.findByUsername(username).orElseThrow(
+            () -> new IllegalArgumentException("user not found with username"+username)
+        );
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    public UserDto findByEmail(String email){
+        User user = userRepository.findByUsername(email).orElseThrow(
+            () -> new IllegalArgumentException("user not found with email"+email)
+        );
+        return modelMapper.map(user, UserDto.class);
+    }
+
     public UserDto registerUser(RegistrationRequest registrationRequest){
         Optional<User> existingUser = userRepository.findByUsername(registrationRequest.getUsername());
         if(existingUser.isPresent()){

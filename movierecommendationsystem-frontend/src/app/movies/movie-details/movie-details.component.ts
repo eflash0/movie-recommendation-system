@@ -57,4 +57,8 @@ export class MovieDetailsComponent implements OnInit {
       error => {console.error('error fetching trailer',error);}
     );
   }
+
+  submitRating(){
+    
+  }
 }

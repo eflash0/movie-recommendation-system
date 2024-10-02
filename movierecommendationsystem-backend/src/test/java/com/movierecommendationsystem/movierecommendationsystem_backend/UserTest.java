@@ -2,6 +2,7 @@ package com.movierecommendationsystem.movierecommendationsystem_backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -47,6 +48,11 @@ public class UserTest {
         user.setUsername("test");
         user.setPassword("test");
         user.setEmail("test@gmail.com");
+        userDto = new UserDto();
+        userDto.setUsername("test");
+        userDto.setPassword("test");
+        userDto.setEmail("test@gmail.com");
+        registrationRequest = new RegistrationRequest();
         registrationRequest.setUsername("test");
         registrationRequest.setPassword("test");
         registrationRequest.setConfirmPassword("test");
@@ -54,18 +60,31 @@ public class UserTest {
     }
 
     @Test
-    public void registerWithSuccessTest(){
+    void registerWithSuccessTest(){
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-        when(userService.registerUser(registrationRequest)).thenReturn(userDto);
         when(bCryptPasswordEncoder.encode(anyString())).thenReturn("encoded");
         when(userRepository.save(any(User.class))).thenReturn(user);
-        when(modelMapper.map(any(User.class), eq(UserDto.class))).thenReturn(new UserDto());
+        when(modelMapper.map(any(User.class), eq(UserDto.class))).thenReturn(userDto);
         UserDto result = userService.registerUser(registrationRequest);
         assertNotNull(result);
         assertEquals(user.getUsername(), result.getUsername());
         verify(userRepository, times(1)).save(any(User.class));
         verify(bCryptPasswordEncoder,times(1)).encode(registrationRequest.getPassword());
+    }
+
+    @Test
+    void usernameAlreadyExistTest(){
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
+        assertThrows(IllegalArgumentException.class,() -> {userService.registerUser(registrationRequest);});
+        verify(userRepository, times(1)).findByUsername(registrationRequest.getUsername());
+    }
+
+    @Test
+    void emailAlreadyExist(){
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
+        assertThrows(IllegalArgumentException.class,() -> userService.registerUser(registrationRequest));
+        verify(userRepository,times(1)).findByEmail(registrationRequest.getEmail());
     }
     
 }
