@@ -21,33 +21,35 @@ export class RegistrationComponent {
   signupError = '';
   constructor(private userService : UserService, private router : Router){ }
 
-  onSignup(){
-    if(this.registrationRequest.password === this.registrationRequest.confirmPassword){
+  onSignup() {
+    if (this.registrationRequest.password !== this.registrationRequest.confirmPassword) {
       this.signupError = 'Password must be equal to the confirm password';
+      return;
     }
+  
     this.userService.findByUsename(this.registrationRequest.username).subscribe(
-      response => {this.signupError = 'Usename already exists';
-        return;
-      },
-      error => {console.error('user not found',error);
-      }
-    );
-    this.userService.findByEmail(this.registrationRequest.email).subscribe(
-      response => {this.signupError = 'Email already exists';
-        return;
-      },
-      error => {console.error('user not found',error);
-      }
-    );
-    this.userService.register(this.registrationRequest).subscribe(
       response => {
-        this.router.navigate(['/login']);
+        this.signupError = 'Username already exists';
       },
       error => {
-        this.signupError = 'an error occurs during the registration';
-        console.error('an error occurs during the registration',error);
-        
+        this.userService.findByEmail(this.registrationRequest.email).subscribe(
+          response => {
+            this.signupError = 'Email already exists';
+          },
+          error => {
+            this.userService.register(this.registrationRequest).subscribe(
+              response => {
+                this.router.navigate(['/login']);
+              },
+              error => {
+                this.signupError = 'An error occurred during the registration';
+                console.error('An error occurred during the registration', error);
+              }
+            );
+          }
+        );
       }
     );
   }
+  
 }
