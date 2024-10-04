@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 public class WebSecurity {
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JwtTokenFilter jwtTokenFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -33,10 +34,15 @@ public class WebSecurity {
                 .requestMatchers("/admins/**").permitAll()//hasAuthority(Role.ADMIN.name())
                 .anyRequest().permitAll()
             )
+            .oauth2Login(oauth2 -> oauth2 
+                .loginPage("/auth/oauth2/login")
+                .defaultSuccessUrl("/auth/oauth2/success")
+                .failureUrl("/auth/oauth2/failure")
+            )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             );
-            // http.addFilterBefore(jwtTokenFilter,UsernamePasswordAuthenticationFilter.class);
+            http.addFilterBefore(jwtTokenFilter,UsernamePasswordAuthenticationFilter.class);
             return http.build();
     }
 

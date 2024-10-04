@@ -19,8 +19,8 @@ spring:
       client:
         registration:
           google:
-            client-id: YOUR_GOOGLE_CLIENT_ID
-            client-secret: YOUR_GOOGLE_CLIENT_SECRET
+            client-id: 1039394498768-tjlvvq3k207aol87frmbria85cp5c6tk.apps.googleusercontent.com
+            client-secret: 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
             redirect-uri: "{baseUrl}/oauth2/callback/google"
             scope: profile, email
         provider:
@@ -36,3 +36,6 @@ server:
 
 tmdb:
   api.key: 1990523cf32528efb6e21f892955ba94
+jwt:
+  secret: 2+LaR6mKTpaFTMK4NKlHUQ5JgMtQFK0zGGSE/OUgJR8oU7Vhihb0gA8RofYlZZ/30kN+My5iIvuvYPDDMld5hg==
+  expiration: 36000

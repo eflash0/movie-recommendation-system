@@ -59,10 +59,9 @@ public class UserService implements UserDetailsService {
         }
         User user = new User();
         user.setUsername(registrationRequest.getUsername());
-        user.setPassword(registrationRequest.getPassword());
         user.setEmail(registrationRequest.getEmail());
         user.setRole(Role.USER);
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(registrationRequest.getPassword()));
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser,UserDto.class);
     }
