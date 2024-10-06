@@ -34,9 +34,8 @@ public class WebSecurity {
                 .requestMatchers("/admins/**").permitAll()//hasAuthority(Role.ADMIN.name())
                 .anyRequest().permitAll()
             )
-            .oauth2Login(oauth2 -> oauth2 
-                .loginPage("/auth/oauth2/login")
-                .defaultSuccessUrl("/auth/oauth2/success")
+            .oauth2Login(oauth2 -> oauth2
+                .defaultSuccessUrl("/auth/oauth2/success", true)
                 .failureUrl("/auth/oauth2/failure")
             )
             .sessionManagement(session -> session

@@ -19,9 +19,9 @@ spring:
       client:
         registration:
           google:
-            client-id: 1039394498768-tjlvvq3k207aol87frmbria85cp5c6tk.apps.googleusercontent.com
-            client-secret: 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
-            redirect-uri: "{baseUrl}/oauth2/callback/google"
+            client-id: 1039394498768-pa8127ndhi46mnu7f724vq5j9ffserlm.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: "http://localhost:8082/login/oauth2/code/google"
             scope: profile, email
         provider:
           google:
