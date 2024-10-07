@@ -2,6 +2,8 @@ package com.movierecommendationsystem.movierecommendationsystem_backend.controll
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,11 +31,11 @@ public class AuthController {
         return ResponseEntity.ok(loginResponse);
     }
 
-    @GetMapping("/oauth2/success")
-    public ResponseEntity<LoginResponse> oauth2Login(@RequestParam("code") String code,OAuth2User oauth2User) {
-        LoginResponse loginResponse = authService.oauth2Login(oauth2User);
-        return ResponseEntity.ok(loginResponse);
-    }
+    // @GetMapping("/oauth2/success")
+    // public ResponseEntity<LoginResponse> oauth2Login(OAuth2AuthenticationToken token) {
+    //     LoginResponse loginResponse = authService.oauth2Login(token);
+    //     return ResponseEntity.ok(loginResponse);
+    // }
 
     @GetMapping("/validate-token")
     public ResponseEntity<Boolean> validateToken(@RequestParam String token) {

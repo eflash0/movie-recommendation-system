@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../../service/movie.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { NavigationBarComponent } from "../../navigation-bar/navigation-bar.component";
 
 @Component({
   selector: 'app-get-movies',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NavigationBarComponent],
   templateUrl: './get-movies.component.html',
   styleUrl: './get-movies.component.css'
 })

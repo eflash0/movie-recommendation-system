@@ -66,4 +66,13 @@ public class UserService implements UserDetailsService {
         return modelMapper.map(savedUser,UserDto.class);
     }
 
+    public void processOAuthPostLogin(String email) {
+        User user = userRepository.findByEmail(email).get();
+        if (user == null) {
+            user = new User();
+            user.setEmail(email);
+            userRepository.save(user);
+        }
+    }
+
 }

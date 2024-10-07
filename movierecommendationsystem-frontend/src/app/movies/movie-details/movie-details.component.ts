@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TrailerDialogComponent } from '../trailer-dialog/trailer-dialog.component';
 import { InteractionService } from '../../service/interaction.service';
+import { NavigationBarComponent } from "../../navigation-bar/navigation-bar.component";
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, NavigationBarComponent],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.css'
 })

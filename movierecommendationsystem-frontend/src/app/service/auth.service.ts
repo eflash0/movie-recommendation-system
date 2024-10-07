@@ -20,7 +20,8 @@ export class AuthService {
     return this.http.get<any>(url,{ params });
   }
 
-  validateToken(token : string) : Observable<any>{
+  validateToken() : Observable<any>{
+    const token = localStorage.getItem('token');
     const url = `${this.baseUrl}/validate-token?token=${token}`;
     return this.http.get<boolean>(url);
   }

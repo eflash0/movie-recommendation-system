@@ -24,6 +24,7 @@ public class WebSecurity {
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtTokenFilter jwtTokenFilter;
+    private CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -35,11 +36,11 @@ public class WebSecurity {
                 .anyRequest().permitAll()
             )
             .oauth2Login(oauth2 -> oauth2
-                .defaultSuccessUrl("/auth/oauth2/success", true)
-                .failureUrl("/auth/oauth2/failure")
+                .successHandler(customOAuth2SuccessHandler)  // Use the custom success handler
+                .failureUrl("/auth/oauth2/failure")  // Handle OAuth2 failure
             )
             .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
             );
             http.addFilterBefore(jwtTokenFilter,UsernamePasswordAuthenticationFilter.class);
             return http.build();
@@ -53,4 +54,5 @@ public class WebSecurity {
                    .and()
                    .build();
     }
+
 }
