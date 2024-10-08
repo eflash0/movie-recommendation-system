@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,15 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const url = `${this.baseUrl}/validate-token?token=${token}`;
     return this.http.get<boolean>(url);
+  }
+
+  extractUsernameFromToken() : Observable<any>{
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return throwError(() => new Error('Token not found in localStorage'));
+    }
+    const url = `${this.baseUrl}/username-from-token`;
+    const params = new HttpParams().set('token',token);
+    return this.http.get<any>(url,{params});
   }
 }

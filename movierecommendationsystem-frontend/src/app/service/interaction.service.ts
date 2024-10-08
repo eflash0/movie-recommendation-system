@@ -52,5 +52,11 @@ export class InteractionService {
     const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
     return this.http.get<any>(url,{ headers });
   }
+
+  findInteraction(userId: number, movieId: number) : Observable<any>{
+    const url = `${this.baseUrl}/${userId}/${movieId}`;
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    return this.http.get<any>(url,{ headers });
+  }
   
 }

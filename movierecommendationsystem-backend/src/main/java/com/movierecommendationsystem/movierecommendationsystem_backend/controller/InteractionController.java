@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.InteractionDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
-import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Interaction;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.InteractionService;
 
 @RestController
@@ -23,16 +23,16 @@ public class InteractionController {
     private InteractionService interactionService;
 
     @GetMapping("/{userId}/{movieId}")
-    public ResponseEntity<Interaction> findInteractionById(@PathVariable Long userId,
+    public ResponseEntity<InteractionDto> findInteraction(@PathVariable Long userId,
     @PathVariable Long movieId){
-        Interaction interaction = interactionService.findInteraction(userId, movieId);
+        InteractionDto interaction = interactionService.findInteraction(userId, movieId);
         return ResponseEntity.ok(interaction);
     }
 
     @PostMapping("/{userId}/{movieId}/rating")
-    public ResponseEntity<Interaction> rateMovie(@PathVariable Long userId,
+    public ResponseEntity<InteractionDto> rateMovie(@PathVariable Long userId,
     @PathVariable Long movieId,@RequestParam double rating){
-        Interaction interaction = interactionService.rateMovie(userId, movieId,rating);
+        InteractionDto interaction = interactionService.rateMovie(userId, movieId,rating);
         return ResponseEntity.ok(interaction);
     }    
 
@@ -43,9 +43,9 @@ public class InteractionController {
     }
 
     @PostMapping("{userId}/{movieId}/watchlist")
-    public ResponseEntity<Interaction> addToWatchList(@PathVariable Long userId,
+    public ResponseEntity<InteractionDto> addToWatchList(@PathVariable Long userId,
     @PathVariable Long movieId){
-        Interaction interaction = interactionService.addToWatchList(userId, movieId);
+        InteractionDto interaction = interactionService.addToWatchList(userId, movieId);
         return ResponseEntity.ok(interaction);
     }
 
@@ -57,9 +57,9 @@ public class InteractionController {
     }
 
     @PostMapping("{userId}/{movieId}/favorite")
-    public ResponseEntity<Interaction> addToFavorite(@PathVariable Long userId,
+    public ResponseEntity<InteractionDto> addToFavorite(@PathVariable Long userId,
     @PathVariable Long movieId){
-        Interaction interaction = interactionService.addToFavorite(userId, movieId);
+        InteractionDto interaction = interactionService.addToFavorite(userId, movieId);
         return ResponseEntity.ok(interaction);
     }
 

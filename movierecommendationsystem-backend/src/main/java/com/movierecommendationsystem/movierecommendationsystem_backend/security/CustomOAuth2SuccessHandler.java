@@ -33,13 +33,8 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
                                         Authentication authentication) throws IOException, ServletException {
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
         LoginResponse loginResponse = oAuth2LoginService.oauth2Login(oauthToken);
-        Map<String, Object> attributes = oauthToken.getPrincipal().getAttributes();
-        String name = (String) attributes.get("name");
-        String token = jwtUtil.generateToken(name,"USER");
-
         String loginResponseJson = objectMapper.writeValueAsString(loginResponse);
         String encodedLoginResponseJson = URLEncoder.encode(loginResponseJson, StandardCharsets.UTF_8.toString());
-
         String redirectUrl = "http://localhost:4200/login?response=" + encodedLoginResponseJson;
         response.sendRedirect(redirectUrl);
     }

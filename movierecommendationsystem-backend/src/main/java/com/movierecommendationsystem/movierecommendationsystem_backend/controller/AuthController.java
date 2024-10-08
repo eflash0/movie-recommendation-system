@@ -17,6 +17,9 @@ import com.movierecommendationsystem.movierecommendationsystem_backend.dto.Login
 import com.movierecommendationsystem.movierecommendationsystem_backend.security.JwtUtil;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.AuthService;
 
+import java.util.Map;
+import java.util.HashMap;
+
 @RestController
 @RequestMapping(path = "/auth")
 public class AuthController {
@@ -31,11 +34,13 @@ public class AuthController {
         return ResponseEntity.ok(loginResponse);
     }
 
-    // @GetMapping("/oauth2/success")
-    // public ResponseEntity<LoginResponse> oauth2Login(OAuth2AuthenticationToken token) {
-    //     LoginResponse loginResponse = authService.oauth2Login(token);
-    //     return ResponseEntity.ok(loginResponse);
-    // }
+    @GetMapping("/username-from-token")
+    public ResponseEntity<Map<String, String>> getUsernameFromToken(@RequestParam String token){
+        String username = jwtUtil.getUsernameFromToken(token);
+        Map<String,String> response = new HashMap<>();
+        response.put("username", username);
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/validate-token")
     public ResponseEntity<Boolean> validateToken(@RequestParam String token) {

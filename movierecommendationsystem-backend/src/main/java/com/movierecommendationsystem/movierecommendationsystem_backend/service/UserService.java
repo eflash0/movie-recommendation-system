@@ -1,6 +1,7 @@
 package com.movierecommendationsystem.movierecommendationsystem_backend.service;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,13 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username.trim()).orElseThrow(() -> 
         new UsernameNotFoundException("user not found"));
+    }
+
+    public List<UserDto> findUsers(){
+        List<UserDto> users = userRepository.findAll().stream()
+        .map(user -> modelMapper.map(user, UserDto.class))
+        .toList();
+        return users;
     }
 
     public UserDto findByUsername(String username){
@@ -64,15 +72,6 @@ public class UserService implements UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(registrationRequest.getPassword()));
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser,UserDto.class);
-    }
-
-    public void processOAuthPostLogin(String email) {
-        User user = userRepository.findByEmail(email).get();
-        if (user == null) {
-            user = new User();
-            user.setEmail(email);
-            userRepository.save(user);
-        }
     }
 
 }
