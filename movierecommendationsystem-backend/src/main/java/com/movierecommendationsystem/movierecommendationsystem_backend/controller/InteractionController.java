@@ -22,6 +22,12 @@ public class InteractionController {
     @Autowired
     private InteractionService interactionService;
 
+    @GetMapping
+    public ResponseEntity<List<InteractionDto>> getInteractions(){
+        List<InteractionDto> interactions = interactionService.getInteractions();
+        return ResponseEntity.ok(interactions);
+    }
+
     @GetMapping("/{userId}/{movieId}")
     public ResponseEntity<InteractionDto> findInteraction(@PathVariable Long userId,
     @PathVariable Long movieId){

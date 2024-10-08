@@ -32,18 +32,18 @@ export class MovieDetailsComponent implements OnInit {
     private authService : AuthService, private userService : UserService
   ){ }
   ngOnInit(): void {
-    const movieId = +this.route.snapshot.paramMap.get('id')!;
-    this.getMovieDetails(movieId);
-    this.getMovieTrailer(movieId);
+    this.movieId = +this.route.snapshot.paramMap.get('id')!;
+    this.getMovieDetails(this.movieId);
+    this.getMovieTrailer(this.movieId);
     this.authService.extractUsernameFromToken().subscribe(
       response => {
         this.username = response.username;
         this.userService.findByUsename(this.username).subscribe(
           response => {this.user = response;
-            this.interactionService.findInteraction(this.user.userId,movieId).subscribe(
+            this.interactionService.findInteraction(this.user.userId,this.movieId).subscribe(
               response => {this.interaction = response;
-                this.isFavorite = this.interaction.isFavorite;
-                this.isWatchList = this.interaction.isWatchList;
+                this.isFavorite = this.interaction.favorite;
+                this.isWatchList = this.interaction.watchList;
               },
               error => {console.error('error fetching interaction',error);}
             );
@@ -53,7 +53,6 @@ export class MovieDetailsComponent implements OnInit {
       },
       error => {console.error('error extracting username',error);}
     );
-    console.log(this.username); 
   }
 
   getMovieDetails(id : number){
@@ -62,23 +61,40 @@ export class MovieDetailsComponent implements OnInit {
       error => {console.error('error fetching movie details',error);}
     );
   }
+
   rateMovie(){
 
   }
-  addToWatchList(){
+
+  addToWatchList(){    
     this.interactionService.addToWatchList(this.user.userId,this.movieId).subscribe(
-      response => {console.log('added to watch list successfully');
-        this.ngOnInit();
+      response => {console.log('added to watch list successfully',this.user);
       },
       error => {console.error('error adding movie to watch list',error);}
     );
   }
+
+  removeFromWatchList(){
+    this.interactionService.removeFromWatchList(this.user.userId,this.movieId).subscribe(
+      response => {console.log('removed from watch list successfully',this.user);
+      },
+      error => {console.error('error removing movie from watch list',error);}
+    );
+  }
+
   addToFavorite(){
     this.interactionService.addToFavorite(this.user.userId,this.movieId).subscribe(
-      response => {console.log('added to favorite successfully');
-        this.ngOnInit();
+      response => {console.log('added to favorite successfully',response);
       },
       error => {console.error('error adding movie to favorite',error);}
+    );
+  }
+
+  removeFromFavorite(){
+    this.interactionService.removeFromFavorite(this.user.userId,this.movieId).subscribe(
+      response => {console.log('removed from favorite successfully',response);
+      },
+      error => {console.error('error removing movie from favorite',error);}
     );
   }
 
@@ -95,7 +111,24 @@ export class MovieDetailsComponent implements OnInit {
     );
   }
 
-  submitRating(){
-    
+  toggleFavorite(){
+    if(this.isFavorite){
+      this.removeFromFavorite();
+    }
+    else{
+      this.addToFavorite();
+    }
+    this.isFavorite = !this.isFavorite;
   }
+
+  toggleWatchList(){
+    if(this.isWatchList){
+      this.removeFromWatchList();
+    }
+    else{
+      this.addToWatchList();
+    }
+    this.isWatchList = !this.isWatchList;
+  }
+
 }

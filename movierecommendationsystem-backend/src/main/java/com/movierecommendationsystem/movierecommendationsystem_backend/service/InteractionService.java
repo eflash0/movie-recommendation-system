@@ -25,6 +25,12 @@ public class InteractionService {
     @Autowired
     private ModelMapper modelMapper;
 
+    public List<InteractionDto> getInteractions(){
+        List<Interaction> interactions = interactionRepository.findAll();
+        return interactions.stream().map(interaction -> modelMapper
+        .map(interaction, InteractionDto.class)).toList();
+    } 
+
     public InteractionDto rateMovie(Long userId,Long movieId,double rating){
         User user = userRepository.findById(userId).orElseThrow(() -> 
         new IllegalArgumentException("user not found")); 
@@ -47,14 +53,15 @@ public class InteractionService {
         return modelMapper.map(savedInteraction, InteractionDto.class);
     }
 
-    public void removeFromWatchList(Long userId,Long movieId){
+    public InteractionDto removeFromWatchList(Long userId,Long movieId){
         User user = userRepository.findById(userId).orElseThrow(() -> 
         new IllegalArgumentException("user not found")); 
         Interaction interaction = interactionRepository.findByUserAndMovieId(user, movieId).orElse(new Interaction());
         interaction.setUser(user);
         interaction.setMovieId(movieId);
         interaction.setWatchList(false);
-        interactionRepository.deleteById(interaction.getInteractionId());
+        Interaction savedInteraction = interactionRepository.save(interaction);  
+        return modelMapper.map(savedInteraction, InteractionDto.class);
     }
 
     public InteractionDto addToFavorite(Long userId,Long movieId){
@@ -76,14 +83,15 @@ public class InteractionService {
         .toList();
     }
 
-    public void removeFromFavorite(Long userId,Long movieId){
+    public InteractionDto removeFromFavorite(Long userId,Long movieId){
         User user = userRepository.findById(userId).orElseThrow(() -> 
         new IllegalArgumentException("user not found")); 
         Interaction interaction = interactionRepository.findByUserAndMovieId(user, movieId).orElse(new Interaction());
         interaction.setUser(user);
         interaction.setMovieId(movieId);
         interaction.setFavorite(false);
-        interactionRepository.deleteById(interaction.getInteractionId());
+        Interaction savedInteraction = interactionRepository.save(interaction);  
+        return modelMapper.map(savedInteraction, InteractionDto.class);
     }
 
     public List<MovieDto> getFavoriteMovies(Long userId){
@@ -97,8 +105,15 @@ public class InteractionService {
     public InteractionDto findInteraction(Long userId,Long movieId){
         User user = userRepository.findById(userId).orElseThrow(() -> 
         new IllegalArgumentException("user not found")); 
-        Interaction interaction = interactionRepository.findByUserAndMovieId(user, movieId).orElseThrow(
-            () -> new IllegalArgumentException("no interaction between the user and the movie")
+        Interaction interaction = interactionRepository.findByUserAndMovieId(user, movieId).orElseGet(
+            () -> {
+                Interaction newInteraction = new Interaction();
+                newInteraction.setUser(user);
+                newInteraction.setMovieId(movieId);
+                newInteraction.setWatchList(false);
+                newInteraction.setFavorite(false);
+                return interactionRepository.save(newInteraction);
+            }
         );
         return modelMapper.map(interaction, InteractionDto.class);
     }

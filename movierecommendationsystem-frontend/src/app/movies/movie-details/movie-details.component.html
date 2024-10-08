@@ -21,7 +21,6 @@
                 <span class="text-gray-400">({{ movie.popularity }} Popularity)</span>
             </div>
 
-            <!-- Movie Genres -->
             <div class="mt-4">
                 <h3 class="text-lg font-semibold text-gray-300">Genres:</h3>
                 <ul class="flex space-x-2">
@@ -31,7 +30,6 @@
                 </ul>
             </div>
 
-            <!-- Play Trailer Button -->
             <div class="mt-6">
                 <button 
                     (click)="toggleTrailer()" 
@@ -40,8 +38,6 @@
                 </button>
             </div>
             
-
-            <!-- Rate the Movie -->
             <div class="mt-6">
                 <h3 class="text-lg font-semibold text-gray-300 mb-2">Rate This Movie:</h3>
                 <div class="flex items-center">
@@ -49,28 +45,29 @@
                         <option *ngFor="let rate of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="rate">{{ rate }}</option>
                     </select>
                     <button 
-                        (click)="submitRating()" 
+                        (click)="rateMovie()" 
                         class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 ml-2">
                         Submit Rating
                     </button>
                 </div>
             </div>
 
-            <!-- Favorite and Watch Later Buttons -->
             <div class="mt-6 flex space-x-4">
                 <button 
-                    (click)="addToFavorite()" 
+                    (click)="toggleFavorite()" 
                     class="py-2 px-4 rounded text-white hover:bg-red-700"
                     [ngClass]="isFavorite ? 'bg-red-600' : 'bg-gray-600'">
                     {{ isFavorite ? 'Remove from Favorites' : 'Add to Favorites' }}
                 </button>
-
+            
                 <button 
-                    (click)="addToWatchList()" 
-                    class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">
-                    Add to Watch Later
+                    (click)="toggleWatchList()" 
+                    class="py-2 px-4 rounded text-white"
+                    [ngClass]="isWatchList ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'">
+                    {{ isWatchList ? 'Remove from Watch List' : 'Add to Watch Later' }}
                 </button>
             </div>
+            
         </div>
     </div>
 </div>
