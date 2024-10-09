@@ -9,11 +9,12 @@ import { InteractionService } from '../../service/interaction.service';
 import { NavigationBarComponent } from "../../navigation-bar/navigation-bar.component";
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
+import { FooterComponent } from "../../footer/footer.component";
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavigationBarComponent],
+  imports: [CommonModule, FormsModule, NavigationBarComponent, FooterComponent],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.css'
 })
@@ -42,6 +43,7 @@ export class MovieDetailsComponent implements OnInit {
           response => {this.user = response;
             this.interactionService.findInteraction(this.user.userId,this.movieId).subscribe(
               response => {this.interaction = response;
+                this.userRating = response.rating;
                 this.isFavorite = this.interaction.favorite;
                 this.isWatchList = this.interaction.watchList;
               },
@@ -63,7 +65,10 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   rateMovie(){
-
+    this.interactionService.rateMovie(this.user.userId,this.movieId,this.userRating).subscribe(
+      response => {this.ngOnInit()},
+      error => {console.error('error rating the movie',error);}
+    );
   }
 
   addToWatchList(){    
