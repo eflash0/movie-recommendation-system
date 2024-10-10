@@ -6,10 +6,10 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <!-- tvShow Card -->
             <div *ngFor="let tvShow of tvShows" class="bg-gray-800 rounded-lg overflow-hidden group relative shadow-lg transition-transform duration-300 transform hover:scale-105">
-                <img [src]="'https://image.tmdb.org/t/p/w500'+tvShow.poster_path" alt="{{ tvShow.original_name }}" class="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-105">
+                <img [src]="'https://image.tmdb.org/t/p/w500'+tvShow.poster_path" alt="{{ tvShow.name }}" class="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-105">
                 <div (click)="tvShowDetails(tvShow.id)" class="p-4 absolute inset-0 bg-gray-900 bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end cursor-pointer">
-                    <h3 class="text-lg font-semibold text-blue-400">{{ tvShow.title }}</h3>
-                    <p class="text-gray-300 text-sm">{{ tvShow.release_date | date:'MMMM d, yyyy'}}</p>
+                    <h3 class="text-lg font-semibold text-blue-400">{{ tvShow.name }}</h3>
+                    <p class="text-gray-300 text-sm">{{ tvShow.first_air_date | date:'MMMM d, yyyy'}}</p>
                 </div>
             </div>
         </div>

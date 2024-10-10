@@ -6,8 +6,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.GenreResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.SearchResult;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbMovieResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbVideosResponse;
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMdBSearchResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Genre;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MediaVideo;
 
@@ -35,9 +37,9 @@ public class MovieService {
         return response.getResults();
     }
 
-    public List<MovieDto> searchMovies(String query, int page) {
+    public List<SearchResult> searchMovies(String query, int page) {
         String url = String.format(SEARCH_MEDIA_URL, apiKey, query, page);
-        TMDbMovieResponse response = restTemplate.getForObject(url, TMDbMovieResponse.class);
+        TMdBSearchResponse response = restTemplate.getForObject(url, TMdBSearchResponse.class);
         return response.getResults();
     }
 

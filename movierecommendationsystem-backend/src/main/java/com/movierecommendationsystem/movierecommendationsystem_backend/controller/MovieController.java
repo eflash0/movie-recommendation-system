@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.SearchResult;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MediaVideo;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.MovieService;
 
@@ -39,9 +40,9 @@ public class MovieController {
     }
 
     @GetMapping("search")
-    public ResponseEntity<List<MovieDto>> searchMovies(@RequestParam String query,@RequestParam(defaultValue = "1") int page){
-        List<MovieDto> movies = movieService.searchMovies(query, page);
-        return ResponseEntity.ok(movies);
+    public ResponseEntity<List<SearchResult>> searchMovies(@RequestParam String query,@RequestParam(defaultValue = "1") int page){
+        List<SearchResult> results = movieService.searchMovies(query, page);
+        return ResponseEntity.ok(results);
     }
 
 }
