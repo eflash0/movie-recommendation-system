@@ -56,10 +56,10 @@ public class InteractionController {
     }
 
     @DeleteMapping("{userId}/{movieId}/watchlist")
-    public ResponseEntity<Void> removeFromWatchList(@PathVariable Long userId,
+    public ResponseEntity<InteractionDto> removeFromWatchList(@PathVariable Long userId,
     @PathVariable Long movieId){
-        interactionService.removeFromWatchList(userId, movieId);
-        return ResponseEntity.noContent().build();
+        InteractionDto interaction = interactionService.removeFromWatchList(userId, movieId);
+        return ResponseEntity.ok(interaction);
     }
 
     @PostMapping("{userId}/{movieId}/favorite")
@@ -76,10 +76,10 @@ public class InteractionController {
     }
 
     @DeleteMapping("{userId}/{movieId}/favorite")
-    public ResponseEntity<Void> removeFromFavorite(@PathVariable Long userId,
+    public ResponseEntity<InteractionDto> removeFromFavorite(@PathVariable Long userId,
     @PathVariable Long movieId){
-        interactionService.removeFromFavorite(userId, movieId);
-        return ResponseEntity.noContent().build();
+        InteractionDto interaction = interactionService.removeFromFavorite(userId, movieId);
+        return ResponseEntity.ok(interaction);
     }
 
 }

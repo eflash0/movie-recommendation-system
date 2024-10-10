@@ -6,10 +6,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.GenreResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbResponse;
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbMovieResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbVideosResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Genre;
-import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MovieVideo;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MediaVideo;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class MovieService {
     @Value("${tmdb.api.key}")
     private String apiKey;
     private static final String POPULAR_MOVIES_URL = "https://api.themoviedb.org/3/movie/popular?api_key=%s&page=%d";
-    private static final String SEARCH_MOVIE_URL = "https://api.themoviedb.org/3/search/movie?api_key=%s&query=%s&page=%d";
+    private static final String SEARCH_MEDIA_URL = "https://api.themoviedb.org/3/search/multi?api_key=%s&query=%s&page=%d";
     private static final String MOVIE_DETAILS_URL = "https://api.themoviedb.org/3/movie/%d?api_key=%s";
     private static final String MOVIE_GENRES_URL = "https://api.themoviedb.org/3/genre/movie/list?api_key=%s";
     private static final String MOVIE_TRAILER = "https://api.themoviedb.org/3/movie/%d/videos?api_key=%s";
@@ -31,13 +31,13 @@ public class MovieService {
 
     public List<MovieDto> getPopularMovies(int page){
         String url = String.format(POPULAR_MOVIES_URL,apiKey,page);
-        TMDbResponse response = restTemplate.getForObject(url,TMDbResponse.class);
+        TMDbMovieResponse response = restTemplate.getForObject(url,TMDbMovieResponse.class);
         return response.getResults();
     }
 
     public List<MovieDto> searchMovies(String query, int page) {
-        String url = String.format(SEARCH_MOVIE_URL, apiKey, query, page);
-        TMDbResponse response = restTemplate.getForObject(url, TMDbResponse.class);
+        String url = String.format(SEARCH_MEDIA_URL, apiKey, query, page);
+        TMDbMovieResponse response = restTemplate.getForObject(url, TMDbMovieResponse.class);
         return response.getResults();
     }
 
@@ -52,7 +52,7 @@ public class MovieService {
         return response.getGenres();
     }
 
-    public MovieVideo getMovieTrailer(Long id){
+    public MediaVideo getMovieTrailer(Long id){
         String url = String.format(MOVIE_TRAILER,id,apiKey);
         TMDbVideosResponse response = restTemplate.getForObject(url, TMDbVideosResponse.class);
         if(response != null){

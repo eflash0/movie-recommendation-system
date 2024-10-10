@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../../service/movie.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { TrailerDialogComponent } from '../trailer-dialog/trailer-dialog.component';
+import { TrailerDialogComponent } from '../../trailer-dialog/trailer-dialog.component';
 import { InteractionService } from '../../service/interaction.service';
 import { NavigationBarComponent } from "../../navigation-bar/navigation-bar.component";
 import { AuthService } from '../../service/auth.service';
@@ -30,7 +30,8 @@ export class MovieDetailsComponent implements OnInit {
   interaction : any;
   constructor(private movieService : MovieService,private route : ActivatedRoute,
     private dialog : MatDialog,private interactionService : InteractionService,
-    private authService : AuthService, private userService : UserService
+    private authService : AuthService, private userService : UserService,
+    private router : Router
   ){ }
   ngOnInit(): void {
     this.movieId = +this.route.snapshot.paramMap.get('id')!;
@@ -65,42 +66,67 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   rateMovie(){
-    this.interactionService.rateMovie(this.user.userId,this.movieId,this.userRating).subscribe(
-      response => {this.ngOnInit()},
-      error => {console.error('error rating the movie',error);}
-    );
+    if(this.username){
+      this.interactionService.rateMovie(this.user.userId,this.movieId,this.userRating).subscribe(
+        response => {this.ngOnInit()},
+        error => {console.error('error rating the movie',error);}
+      );
+    }
+    else{
+      this.router.navigate(['/login']);
+    }
   }
 
-  addToWatchList(){    
-    this.interactionService.addToWatchList(this.user.userId,this.movieId).subscribe(
-      response => {console.log('added to watch list successfully',this.user);
-      },
-      error => {console.error('error adding movie to watch list',error);}
-    );
+  addToWatchList(){   
+    if(this.username){ 
+      this.interactionService.addToWatchList(this.user.userId,this.movieId).subscribe(
+        response => {console.log('added to watch list successfully',this.user);
+        },
+        error => {console.error('error adding movie to watch list',error);}
+      );
+    }
+    else{
+      this.router.navigate(['/login']);
+    }
   }
 
   removeFromWatchList(){
-    this.interactionService.removeFromWatchList(this.user.userId,this.movieId).subscribe(
-      response => {console.log('removed from watch list successfully',this.user);
-      },
-      error => {console.error('error removing movie from watch list',error);}
-    );
+    if(this.username){
+      this.interactionService.removeFromWatchList(this.user.userId,this.movieId).subscribe(
+        response => {console.log('removed from watch list successfully',this.user);
+        },
+        error => {console.error('error removing movie from watch list',error);}
+      );
+    }
+    else{
+      this.router.navigate(['/login']);
+    }
   }
 
   addToFavorite(){
-    this.interactionService.addToFavorite(this.user.userId,this.movieId).subscribe(
-      response => {console.log('added to favorite successfully',response);
-      },
-      error => {console.error('error adding movie to favorite',error);}
-    );
+    if(this.username){
+      this.interactionService.addToFavorite(this.user.userId,this.movieId).subscribe(
+        response => {console.log('added to favorite successfully',response);
+        },
+        error => {console.error('error adding movie to favorite',error);}
+      );
+    }
+    else{
+      this.router.navigate(['/login']);
+    }
   }
 
   removeFromFavorite(){
-    this.interactionService.removeFromFavorite(this.user.userId,this.movieId).subscribe(
-      response => {console.log('removed from favorite successfully',response);
-      },
-      error => {console.error('error removing movie from favorite',error);}
-    );
+    if(this.username){
+      this.interactionService.removeFromFavorite(this.user.userId,this.movieId).subscribe(
+        response => {console.log('removed from favorite successfully',response);
+        },
+        error => {console.error('error removing movie from favorite',error);}
+      );
+    }
+    else{
+      this.router.navigate(['/login']);
+    }
   }
 
   toggleTrailer(){
@@ -117,23 +143,33 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   toggleFavorite(){
-    if(this.isFavorite){
-      this.removeFromFavorite();
-    }
+    if(this.username){
+      if(this.isFavorite){
+        this.removeFromFavorite();
+      }
+      else{
+        this.addToFavorite();
+      }
+      this.isFavorite = !this.isFavorite;
+    }  
     else{
-      this.addToFavorite();
+      this.router.navigate(['/login']);
     }
-    this.isFavorite = !this.isFavorite;
   }
 
   toggleWatchList(){
-    if(this.isWatchList){
-      this.removeFromWatchList();
-    }
+    if(this.username){
+      if(this.isWatchList){
+        this.removeFromWatchList();
+      }
+      else{
+        this.addToWatchList();
+      }
+      this.isWatchList = !this.isWatchList;
+    }  
     else{
-      this.addToWatchList();
+      this.router.navigate(['/login']);
     }
-    this.isWatchList = !this.isWatchList;
   }
 
 }

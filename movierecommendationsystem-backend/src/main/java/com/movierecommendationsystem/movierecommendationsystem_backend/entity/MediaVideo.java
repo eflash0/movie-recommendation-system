@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MovieVideo {
+public class MediaVideo {
     @JsonProperty("key")
     private String key;
 

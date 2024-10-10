@@ -23,7 +23,7 @@ export class GetMoviesComponent implements OnInit {
   loadMovies(){
     this.page++;
     this.movieService.getPopularMovies(this.page).subscribe(
-      response => {this.movies.push(...response);console.log(this.movies[0].poster_path);},
+      response => {this.movies.push(...response);},
       error => {console.error('error fetching movies',error);}
     );
   }
