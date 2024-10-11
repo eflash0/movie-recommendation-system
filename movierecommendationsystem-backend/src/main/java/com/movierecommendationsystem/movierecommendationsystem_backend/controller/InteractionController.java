@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.InteractionDto;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.Media;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.InteractionService;
 
 @RestController
@@ -28,57 +28,57 @@ public class InteractionController {
         return ResponseEntity.ok(interactions);
     }
 
-    @GetMapping("/{userId}/{movieId}")
+    @GetMapping("/{userId}/{mediaId}")
     public ResponseEntity<InteractionDto> findInteraction(@PathVariable Long userId,
-    @PathVariable Long movieId){
-        InteractionDto interaction = interactionService.findInteraction(userId, movieId);
+    @PathVariable Long mediaId){
+        InteractionDto interaction = interactionService.findInteraction(userId, mediaId);
         return ResponseEntity.ok(interaction);
     }
 
-    @PostMapping("/{userId}/{movieId}/rating")
+    @PostMapping("/{userId}/{mediaId}/rating")
     public ResponseEntity<InteractionDto> rateMovie(@PathVariable Long userId,
-    @PathVariable Long movieId,@RequestParam double rating){
-        InteractionDto interaction = interactionService.rateMovie(userId, movieId,rating);
+    @PathVariable Long mediaId,@RequestParam double rating){
+        InteractionDto interaction = interactionService.rateMedia(userId, mediaId,rating);
         return ResponseEntity.ok(interaction);
     }    
 
     @GetMapping("{userId}/watchlist")
-    public ResponseEntity<List<MovieDto>> watchList(@PathVariable Long userId){
-        List<MovieDto> movies = interactionService.getWatchListMovies(userId);
-        return ResponseEntity.ok(movies);
+    public ResponseEntity<List<Media>> watchList(@PathVariable Long userId){
+        List<Media> medias = interactionService.getWatchList(userId);
+        return ResponseEntity.ok(medias);
     }
 
-    @PostMapping("{userId}/{movieId}/watchlist")
+    @PostMapping("{userId}/{mediaId}/watchlist")
     public ResponseEntity<InteractionDto> addToWatchList(@PathVariable Long userId,
-    @PathVariable Long movieId){
-        InteractionDto interaction = interactionService.addToWatchList(userId, movieId);
+    @PathVariable Long mediaId, @RequestParam String type){
+        InteractionDto interaction = interactionService.addToWatchList(userId, mediaId, type);
         return ResponseEntity.ok(interaction);
     }
 
-    @DeleteMapping("{userId}/{movieId}/watchlist")
+    @DeleteMapping("{userId}/{mediaId}/watchlist")
     public ResponseEntity<InteractionDto> removeFromWatchList(@PathVariable Long userId,
-    @PathVariable Long movieId){
-        InteractionDto interaction = interactionService.removeFromWatchList(userId, movieId);
+    @PathVariable Long mediaId){
+        InteractionDto interaction = interactionService.removeFromWatchList(userId, mediaId);
         return ResponseEntity.ok(interaction);
     }
 
-    @PostMapping("{userId}/{movieId}/favorite")
+    @PostMapping("{userId}/{mediaId}/favorite")
     public ResponseEntity<InteractionDto> addToFavorite(@PathVariable Long userId,
-    @PathVariable Long movieId){
-        InteractionDto interaction = interactionService.addToFavorite(userId, movieId);
+    @PathVariable Long mediaId, @RequestParam String type){
+        InteractionDto interaction = interactionService.addToFavorite(userId, mediaId, type);
         return ResponseEntity.ok(interaction);
     }
 
     @GetMapping("{userId}/favorite")
-    public ResponseEntity<List<MovieDto>> favoriteMovies(@PathVariable Long userId){
-        List<MovieDto> movies = interactionService.getFavoriteMovies(userId);
-        return ResponseEntity.ok(movies);
+    public ResponseEntity<List<Media>> favoriteMovies(@PathVariable Long userId){
+        List<Media> medias = interactionService.getFavoriteMedias(userId);
+        return ResponseEntity.ok(medias);
     }
 
-    @DeleteMapping("{userId}/{movieId}/favorite")
+    @DeleteMapping("{userId}/{mediaId}/favorite")
     public ResponseEntity<InteractionDto> removeFromFavorite(@PathVariable Long userId,
-    @PathVariable Long movieId){
-        InteractionDto interaction = interactionService.removeFromFavorite(userId, movieId);
+    @PathVariable Long mediaId){
+        InteractionDto interaction = interactionService.removeFromFavorite(userId, mediaId);
         return ResponseEntity.ok(interaction);
     }
 

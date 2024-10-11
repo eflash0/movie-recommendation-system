@@ -12,29 +12,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MovieDto {
-
-    @JsonProperty("id")
-    private Long movieId;
+public class MovieDto extends Media {
 
     @JsonProperty("title")
     private String title;
 
-    @JsonProperty("overview")
-    private String overview;
-
     @JsonProperty("release_date")
     private String releaseDate;
-
-    @JsonProperty("poster_path")
-    private String posterPath;
-
-    @JsonProperty("popularity")
-    private Double popularity;
-
-    @JsonProperty("vote_average")
-    private Double voteAverage;
-
-    @JsonProperty("genres")
-    private List<Genre> genres;
 }

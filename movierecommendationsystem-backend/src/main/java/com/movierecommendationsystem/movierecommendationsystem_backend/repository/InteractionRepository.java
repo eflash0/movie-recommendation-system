@@ -11,9 +11,9 @@ import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Us
 
 @Repository
 public interface InteractionRepository extends JpaRepository<Interaction,Long> {
-    List<Interaction> findByMovieId(Long movieId);
+    List<Interaction> findByMediaId(Long mediaId);
     List<Interaction> findByUser(User user);
-    Optional<Interaction> findByUserAndMovieId(User user,Long movieId);
+    Optional<Interaction> findByUserAndMediaId(User user,Long mediaId);
     List<Interaction> findByUserAndIsWatchList(User user,boolean isWatchList);
     List<Interaction> findByUserAndIsFavorite(User user,boolean isFavorite);
 }

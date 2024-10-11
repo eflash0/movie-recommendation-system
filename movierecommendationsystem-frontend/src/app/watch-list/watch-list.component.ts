@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NavigationBarComponent } from "../../navigation-bar/navigation-bar.component";
-import { UserService } from '../../service/user.service';
-import { AuthService } from '../../service/auth.service';
-import { InteractionService } from '../../service/interaction.service';
+import { NavigationBarComponent } from "../navigation-bar/navigation-bar.component";
+import { UserService } from '../service/user.service';
+import { AuthService } from '../service/auth.service';
+import { InteractionService } from '../service/interaction.service';
 import { Router } from '@angular/router';
-import { FooterComponent } from "../../footer/footer.component";
+import { FooterComponent } from "../footer/footer.component";
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-watch-list',
@@ -59,7 +59,12 @@ export class WatchListComponent implements OnInit {
     );   
   }
 
-  movieDetails(id : number){
-    this.router.navigate(['/movies',id]);
+  mediaDetails(media : any){
+    if(media.title){
+      this.router.navigate(['/movies',media.id]);
+    }
+    else{
+      this.router.navigate(['/tv-shows',media.id]);
+    }
   }
 }

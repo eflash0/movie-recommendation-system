@@ -67,7 +67,7 @@ export class MovieDetailsComponent implements OnInit {
 
   rateMovie(){
     if(this.username){
-      this.interactionService.rateMovie(this.user.userId,this.movieId,this.userRating).subscribe(
+      this.interactionService.rate(this.user.userId,this.movieId,this.userRating).subscribe(
         response => {this.ngOnInit()},
         error => {console.error('error rating the movie',error);}
       );
@@ -79,7 +79,7 @@ export class MovieDetailsComponent implements OnInit {
 
   addToWatchList(){   
     if(this.username){ 
-      this.interactionService.addToWatchList(this.user.userId,this.movieId).subscribe(
+      this.interactionService.addToWatchList(this.user.userId,this.movieId,'movie').subscribe(
         response => {console.log('added to watch list successfully',this.user);
         },
         error => {console.error('error adding movie to watch list',error);}
@@ -105,7 +105,7 @@ export class MovieDetailsComponent implements OnInit {
 
   addToFavorite(){
     if(this.username){
-      this.interactionService.addToFavorite(this.user.userId,this.movieId).subscribe(
+      this.interactionService.addToFavorite(this.user.userId,this.movieId,'movie').subscribe(
         response => {console.log('added to favorite successfully',response);
         },
         error => {console.error('error adding movie to favorite',error);}

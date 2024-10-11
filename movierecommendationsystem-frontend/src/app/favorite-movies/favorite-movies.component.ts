@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FooterComponent } from "../../footer/footer.component";
-import { NavigationBarComponent } from "../../navigation-bar/navigation-bar.component";
+import { FooterComponent } from "../footer/footer.component";
+import { NavigationBarComponent } from "../navigation-bar/navigation-bar.component";
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../service/user.service';
-import { AuthService } from '../../service/auth.service';
-import { InteractionService } from '../../service/interaction.service';
+import { UserService } from '../service/user.service';
+import { AuthService } from '../service/auth.service';
+import { InteractionService } from '../service/interaction.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-favorite-movies',
@@ -17,7 +17,7 @@ import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.comp
   styleUrl: './favorite-movies.component.css'
 })
 export class FavoriteMoviesComponent implements OnInit {
-  favoriteMovies : any = [];
+  favorite : any = [];
   username : string = '';
   user : any;
   constructor(private userService : UserService,private authService : AuthService,
@@ -30,7 +30,7 @@ export class FavoriteMoviesComponent implements OnInit {
           response => {
             this.user = response;
             this.interactionService.favorite(this.user.userId).subscribe(
-              response => {this.favoriteMovies = response;},
+              response => {this.favorite = response;},
               error => {console.error('error fetching watch list',error);}
             );
           },
@@ -56,7 +56,12 @@ export class FavoriteMoviesComponent implements OnInit {
     );
   }
 
-  movieDetails(id : number){
-    this.router.navigate(['/movies',id]);
+  mediaDetails(media : any){
+    if(media.title){
+      this.router.navigate(['/movies',media.id]);
+    }
+    else{
+      this.router.navigate(['/tv-shows',media.id]);
+    }
   }
 }

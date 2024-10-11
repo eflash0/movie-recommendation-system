@@ -41,7 +41,7 @@ public class MovieController {
 
     @GetMapping("search")
     public ResponseEntity<List<SearchResult>> searchMovies(@RequestParam String query,@RequestParam(defaultValue = "1") int page){
-        List<SearchResult> results = movieService.searchMovies(query, page);
+        List<SearchResult> results = movieService.search(query, page);
         return ResponseEntity.ok(results);
     }
 

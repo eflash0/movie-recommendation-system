@@ -10,8 +10,8 @@ export class InteractionService {
 
   constructor(private http :HttpClient) { }
 
-  rateMovie(userId : number,movieId : number,rating : number) : Observable<any>{
-    const url = `${this.baseUrl}/${userId}/${movieId}/rating`;
+  rate(userId : number,mediaId : number,rating : number) : Observable<any>{
+    const url = `${this.baseUrl}/${userId}/${mediaId}/rating`;
     const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
     const params = new HttpParams().set('rating',rating.toString());
     return this.http.post<any>(url,{},{headers,params});
@@ -23,26 +23,26 @@ export class InteractionService {
     return this.http.get<any>(url,{ headers });
   }
 
-  addToWatchList(userId: number, movieId: number): Observable<any> {
-    const url = `${this.baseUrl}/${userId}/${movieId}/watchlist`;
+  addToWatchList(userId: number, mediaId: number, type : string): Observable<any> {
+    const url = `${this.baseUrl}/${userId}/${mediaId}/watchlist?type=${type}`;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     return this.http.post<any>(url, {}, { headers });
   }
 
-  removeFromWatchList(userId: number, movieId: number): Observable<any> {
-    const url = `${this.baseUrl}/${userId}/${movieId}/watchlist`;
+  removeFromWatchList(userId: number, mediaId: number): Observable<any> {
+    const url = `${this.baseUrl}/${userId}/${mediaId}/watchlist`;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     return this.http.delete<any>(url, { headers });
   }
 
-  addToFavorite(userId: number, movieId: number): Observable<any> {
-    const url = `${this.baseUrl}/${userId}/${movieId}/favorite`;
+  addToFavorite(userId : number, mediaId : number, type : string): Observable<any> {
+    const url = `${this.baseUrl}/${userId}/${mediaId}/favorite?type=${type}`;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     return this.http.post<any>(url, {}, { headers });
   }
 
-  removeFromFavorite(userId: number, movieId: number): Observable<any> {
-    const url = `${this.baseUrl}/${userId}/${movieId}/favorite`;
+  removeFromFavorite(userId: number, mediaId: number): Observable<any> {
+    const url = `${this.baseUrl}/${userId}/${mediaId}/favorite`;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     return this.http.delete<any>(url, { headers });
   }
@@ -53,8 +53,8 @@ export class InteractionService {
     return this.http.get<any>(url,{ headers });
   }
 
-  findInteraction(userId: number, movieId: number) : Observable<any>{
-    const url = `${this.baseUrl}/${userId}/${movieId}`;
+  findInteraction(userId: number, mediaId: number) : Observable<any>{
+    const url = `${this.baseUrl}/${userId}/${mediaId}`;
     const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
     return this.http.get<any>(url,{ headers });
   }

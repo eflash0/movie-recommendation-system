@@ -4,10 +4,10 @@
             <h1 class="text-3xl font-bold text-blue-400">Abdo Movies</h1>
             <nav class="hidden md:flex space-x-6">
                 <a href="/" class="text-white hover:text-blue-400 transition duration-300">Home</a>
-                <a href="/movies" class="text-white hover:text-blue-400 transition duration-300">Movies</a>
-                <a href="/tv-shows" class="text-white hover:text-blue-400 transition duration-300">TV Shows</a>
-                <a href="/tv-shows" class="text-white hover:text-blue-400 transition duration-300">Watch list</a>
-                <a href="/tv-shows" class="text-white hover:text-blue-400 transition duration-300">Favorite Movies</a>
+                <a [routerLink]="['/movies']" class="text-white hover:text-blue-400 transition duration-300">Movies</a>
+                <a [routerLink]="['/tv-shows']" class="text-white hover:text-blue-400 transition duration-300">TV Shows</a>
+                <a  (click)="watchList()" class="text-white hover:text-blue-400 transition duration-300 cursor-pointer">Watch list</a>
+                <a (click)="favorite()" class="text-white hover:text-blue-400 transition duration-300 cursor-pointer">Favorite Movies</a>
             </nav>
         </div>
         <div class="flex items-center space-x-4">

@@ -37,7 +37,7 @@ public class MovieService {
         return response.getResults();
     }
 
-    public List<SearchResult> searchMovies(String query, int page) {
+    public List<SearchResult> search(String query, int page) {
         String url = String.format(SEARCH_MEDIA_URL, apiKey, query, page);
         TMdBSearchResponse response = restTemplate.getForObject(url, TMdBSearchResponse.class);
         return response.getResults();
