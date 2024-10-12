@@ -1,6 +1,7 @@
 package com.movierecommendationsystem.movierecommendationsystem_backend.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,4 +27,6 @@ public class SeasonDto {
     private String posterPath;
     @JsonProperty("air_date")
     private Date airDate;
+    @JsonProperty("episodes")
+    private List<Episode> episodes;
 }

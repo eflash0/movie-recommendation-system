@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../service/movie.service';
 import { FooterComponent } from "../footer/footer.component";
 import { NavigationBarComponent } from "../navigation-bar/navigation-bar.component";
@@ -16,7 +16,9 @@ export class SearchResultsComponent implements OnInit {
   searchResults : any = [];
   query : string = '';
   page : number = 1;
-  constructor(private route : ActivatedRoute,private movieService : MovieService){}
+  constructor(private route : ActivatedRoute,private movieService : MovieService,
+    private router : Router
+  ){}
   ngOnInit(): void {
     this.route.queryParams.subscribe(
       params => {
@@ -34,8 +36,13 @@ export class SearchResultsComponent implements OnInit {
     );
   }
   
-  viewDetails(id : number){
-
+  viewDetails(media : any){
+    if(media.title){
+      this.router.navigate(['/movies',media.id]);
+    }
+    else{
+      this.router.navigate(['/tv-shows',media.id]);
+    }
   }
 
   loadMovies(){

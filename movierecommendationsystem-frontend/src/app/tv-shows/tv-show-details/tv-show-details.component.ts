@@ -24,7 +24,7 @@ export class TvShowDetailsComponent implements OnInit {
   isFavorite : boolean = false;
   username : string = '';
   user : any;
-  movieId : number = 0;
+  tvShowId : number = 0;
   interaction : any;
   userRating : number = 0;
   trailer : any;
@@ -34,14 +34,14 @@ export class TvShowDetailsComponent implements OnInit {
     private dialog : MatDialog
   ){ }
   ngOnInit(): void {
-    this.movieId = +this.route.snapshot.paramMap.get('id')!;
+    this.tvShowId = +this.route.snapshot.paramMap.get('id')!;
     this.getTvShowDetails();
     this.getTrailer();
     this.authService.extractUsernameFromToken().subscribe(
       response => {this.username = response.username;
         this.userService.findByUsename(this.username).subscribe(
           response => {this.user = response;
-            this.interactionService.findInteraction(this.user.userId,this.movieId).subscribe(
+            this.interactionService.findInteraction(this.user.userId,this.tvShowId).subscribe(
               response => {this.interaction = response;
                 this.userRating = this.interaction.rating;
                 this.isWatchList = this.interaction.watchList;
@@ -57,14 +57,14 @@ export class TvShowDetailsComponent implements OnInit {
   }
 
   getTvShowDetails(){
-    this.tvShowService.getTvShowDetails(this.movieId).subscribe(
+    this.tvShowService.getTvShowDetails(this.tvShowId).subscribe(
       response => {this.tvShow = response;},
       error => {console.error('error fetching tv show details',error);}
     );
   }
 
   getTrailer(){
-    this.tvShowService.getTvShowTrailer(this.movieId).subscribe(
+    this.tvShowService.getTvShowTrailer(this.tvShowId).subscribe(
       response => {this.trailer = response;},
       error => {console.error('error fetching trailer',error);}
     );
@@ -72,7 +72,7 @@ export class TvShowDetailsComponent implements OnInit {
 
   addToWatchList(){
     if(this.username){
-      this.interactionService.addToWatchList(this.user.userId,this.movieId,'tv show').subscribe(
+      this.interactionService.addToWatchList(this.user.userId,this.tvShowId,'tv show').subscribe(
         response => {console.log('added with success',response);
         },
         error => {console.error('error adding tv show to watch list',error);}
@@ -85,7 +85,7 @@ export class TvShowDetailsComponent implements OnInit {
 
   removeFromWatchList(){
     if(this.username){
-      this.interactionService.removeFromWatchList(this.user.userId,this.movieId).subscribe(
+      this.interactionService.removeFromWatchList(this.user.userId,this.tvShowId).subscribe(
         response => {console.log('removed with success',response);
         },
         error => {console.error('error removing tv show from watch list',error);}
@@ -98,7 +98,7 @@ export class TvShowDetailsComponent implements OnInit {
 
   addToFavorite(){
     if(this.username){
-      this.interactionService.addToFavorite(this.user.userId,this.movieId,'tv show').subscribe(
+      this.interactionService.addToFavorite(this.user.userId,this.tvShowId,'tv show').subscribe(
         response => {console.log('added with success',response);
         },
         error => {console.error('error adding tv show to favorite',error);}
@@ -111,7 +111,7 @@ export class TvShowDetailsComponent implements OnInit {
 
   removeFromFavorite(){
     if(this.username){
-      this.interactionService.removeFromFavorite(this.user.userId,this.movieId).subscribe(
+      this.interactionService.removeFromFavorite(this.user.userId,this.tvShowId).subscribe(
         response => {console.log('removed with success',response);
         },
         error => {console.error('error removing tv show from favorite',error);}
@@ -149,9 +149,13 @@ export class TvShowDetailsComponent implements OnInit {
   }
 
   rateTvShow(){
-    this.interactionService.rate(this.user.userId,this.movieId,this.userRating).subscribe(
+    this.interactionService.rate(this.user.userId,this.tvShowId,this.userRating).subscribe(
       response => {this.ngOnInit()},
       error => {console.error('error rating the movie',error);}
     );
+  }
+
+  seasonDetails(seasonNumber : number){
+    this.router.navigate(['/tv-show',this.tvShowId,'season',seasonNumber]);
   }
 }

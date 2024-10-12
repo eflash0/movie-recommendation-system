@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.GenreResponse;
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.SeasonDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbMovieResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbTvShowResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbVideosResponse;
@@ -21,6 +22,7 @@ public class TvShowService {
     private static final String TV_SHOW_DETAILS_URL = "https://api.themoviedb.org/3/tv/%d?api_key=%s";
     private static final String TV_SHOW_GENRES_URL = "https://api.themoviedb.org/3/genre/tv/list?api_key=%s";
     private static final String TV_SHOW_TRAILER_URL = "https://api.themoviedb.org/3/tv/%d/videos?api_key=%s";
+    private static final String TV_SHOW_SEASON_URL = "https://api.themoviedb.org/3/tv/%d/season/%d?api_key=%s";
 
     private final RestTemplate restTemplate;
 
@@ -55,5 +57,11 @@ public class TvShowService {
                     .orElse(null);
         }
         return null;
+    }
+
+
+    public SeasonDto getTvShowSeasonDetails(int tvShowId, int seasonNumber){
+        String url = String.format(TV_SHOW_SEASON_URL, tvShowId, seasonNumber, apiKey);
+        return restTemplate.getForObject(url, SeasonDto.class);
     }
 }

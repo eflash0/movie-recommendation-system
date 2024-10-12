@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.SeasonDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TvShowDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MediaVideo;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.TvShowService;
@@ -39,5 +40,12 @@ public class TvShowController {
     public ResponseEntity<MediaVideo> getTrailers(@PathVariable Long id){
         MediaVideo trailer = tvShowService.getTvShowTrailer(id);
         return ResponseEntity.ok(trailer);
+    }
+
+    @GetMapping("/{tvShowId}/seasons/{seasonNumber}")
+    public ResponseEntity<SeasonDto> getSeasonDetail(@PathVariable Long tvShowId,
+    @PathVariable int seasonNumber){
+        SeasonDto season = tvShowService.getTvShowSeasonDetails(seasonNumber, seasonNumber);
+        return ResponseEntity.ok(season);
     }
 }

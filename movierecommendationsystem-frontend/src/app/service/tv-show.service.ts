@@ -27,4 +27,10 @@ export class TvShowService {
     const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
     return this.http.get<any>(url);
   }
+
+  getSeasonDetails(tvShowId : number, seasonNumber : number) : Observable<any>{
+    const url = `${this.baseUrl}/${tvShowId}/seasons/${seasonNumber}`;
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    return this.http.get<any>(url);
+  }
 }
