@@ -4,6 +4,7 @@ import { MovieService } from '../service/movie.service';
 import { FooterComponent } from "../footer/footer.component";
 import { NavigationBarComponent } from "../navigation-bar/navigation-bar.component";
 import { CommonModule } from '@angular/common';
+import { General } from '../model/generalInfo';
 
 @Component({
   selector: 'app-search-results',
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './search-results.component.css'
 })
 export class SearchResultsComponent implements OnInit {
-  searchResults : any = [];
+  searchResults : General[] = [];
   query : string = '';
   page : number = 1;
   constructor(private route : ActivatedRoute,private movieService : MovieService,

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { FooterComponent } from "../footer/footer.component";
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { General } from '../model/generalInfo';
 
 @Component({
   selector: 'app-watch-list',
@@ -17,7 +18,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrl: './watch-list.component.css'
 })
 export class WatchListComponent implements OnInit {
-  watchList : any = [];
+  watchList : General[] = [];
   username : string = '';
   user : any;
   constructor(private userService : UserService,private authService : AuthService,

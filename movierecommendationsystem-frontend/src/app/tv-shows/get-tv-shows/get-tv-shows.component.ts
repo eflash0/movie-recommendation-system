@@ -4,6 +4,7 @@ import { NavigationBarComponent } from "../../navigation-bar/navigation-bar.comp
 import { Router } from '@angular/router';
 import { TvShowService } from '../../service/tv-show.service';
 import { CommonModule } from '@angular/common';
+import { TvShow } from '../../model/tvShow';
 
 @Component({
   selector: 'app-get-tv-shows',
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './get-tv-shows.component.css'
 })
 export class GetTvShowsComponent implements OnInit {
-  tvShows : any = [];
+  tvShows : TvShow[] = [];
   page : number = 1;
   loading: boolean = false;
   constructor(private tvShowService : TvShowService,private router : Router){ }

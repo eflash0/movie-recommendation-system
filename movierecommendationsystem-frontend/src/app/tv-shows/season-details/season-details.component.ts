@@ -3,11 +3,13 @@ import { Season } from '../../model/season';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TvShowService } from '../../service/tv-show.service';
+import { NavigationBarComponent } from "../../navigation-bar/navigation-bar.component";
+import { FooterComponent } from "../../footer/footer.component";
 
 @Component({
   selector: 'app-season-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NavigationBarComponent, FooterComponent],
   templateUrl: './season-details.component.html',
   styleUrl: './season-details.component.css'
 })
@@ -21,7 +23,7 @@ export class SeasonDetailsComponent implements OnInit {
     this.tvShowId = +this.route.snapshot.paramMap.get('tvShowId')!;
     this.tvShowService.getSeasonDetails(this.tvShowId,this.seasonNumber).subscribe(
       response => {this.season = response;},
-      error => {console.error('error fetching season details');}
+      error => {console.error('error fetching season details',error);}
     );
   }
 }

@@ -91,7 +91,6 @@ public class InteractionService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         List<Interaction> interactions = interactionRepository.findByUserAndIsWatchList(user, true);
         List<Media> mediaList = new ArrayList<>();
-
         for(Interaction interaction : interactions) {
             if(!interaction.isWatchList()) continue;
             if("movie".equalsIgnoreCase(interaction.getMediaType().getValue())) {

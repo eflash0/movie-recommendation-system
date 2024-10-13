@@ -44,7 +44,7 @@ public class TvShowService {
     public List<Genre> getTvShowGenres() {
         String url = String.format(TV_SHOW_GENRES_URL, apiKey);
         GenreResponse response = restTemplate.getForObject(url, GenreResponse.class);
-        return response.getGenres(); // Assuming this returns a list of Genre
+        return response.getGenres();
     }
 
     public MediaVideo getTvShowTrailer(Long id) {
@@ -60,7 +60,7 @@ public class TvShowService {
     }
 
 
-    public SeasonDto getTvShowSeasonDetails(int tvShowId, int seasonNumber){
+    public SeasonDto getTvShowSeasonDetails(Long tvShowId, int seasonNumber){
         String url = String.format(TV_SHOW_SEASON_URL, tvShowId, seasonNumber, apiKey);
         return restTemplate.getForObject(url, SeasonDto.class);
     }

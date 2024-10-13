@@ -19,8 +19,6 @@ public class SeasonDto {
     private int seasonNumber;
     @JsonProperty("name")
     private String name;
-    @JsonProperty("episode_count")
-    private int episodeCount;
     @JsonProperty("overview")
     private String overview;
     @JsonProperty("poster_path")

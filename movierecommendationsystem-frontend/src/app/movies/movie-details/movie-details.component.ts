@@ -10,6 +10,10 @@ import { NavigationBarComponent } from "../../navigation-bar/navigation-bar.comp
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
 import { FooterComponent } from "../../footer/footer.component";
+import { Movie } from '../../model/movie';
+import { Interaction } from '../../model/interaction';
+import { User } from '../../model/user';
+import { MediaVideo } from '../../model/mediaVideo';
 
 @Component({
   selector: 'app-movie-details',
@@ -19,15 +23,15 @@ import { FooterComponent } from "../../footer/footer.component";
   styleUrl: './movie-details.component.css'
 })
 export class MovieDetailsComponent implements OnInit {
-  movie : any;
+  movie : Movie | null = null;
   movieId : number = 0;
   isFavorite : boolean = false;
   isWatchList : boolean = false;
   userRating : number = 0;
-  trailer : any;
+  trailer : MediaVideo | null = null;
   username : string = '';
-  user : any;
-  interaction : any;
+  user : User | null = null;
+  interaction : Interaction | null = null;
   constructor(private movieService : MovieService,private route : ActivatedRoute,
     private dialog : MatDialog,private interactionService : InteractionService,
     private authService : AuthService, private userService : UserService,
@@ -42,14 +46,18 @@ export class MovieDetailsComponent implements OnInit {
         this.username = response.username;
         this.userService.findByUsename(this.username).subscribe(
           response => {this.user = response;
-            this.interactionService.findInteraction(this.user.userId,this.movieId).subscribe(
-              response => {this.interaction = response;
-                this.userRating = response.rating;
-                this.isFavorite = this.interaction.favorite;
-                this.isWatchList = this.interaction.watchList;
-              },
-              error => {console.error('error fetching interaction',error);}
-            );
+            if(this.user){
+              this.interactionService.findInteraction(this.user.userId,this.movieId).subscribe(
+                response => {this.interaction = response;
+                  if(this.interaction){
+                    this.userRating = response.rating;
+                    this.isFavorite = this.interaction?.favorite;
+                    this.isWatchList = this.interaction?.watchList;
+                  }         
+                },
+                error => {console.error('error fetching interaction',error);}
+              );
+            }      
           },
           error => {console.error('error fetching user',error);}
         );
@@ -66,7 +74,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   rateMovie(){
-    if(this.username){
+    if(this.username && this.user){
       this.interactionService.rate(this.user.userId,this.movieId,this.userRating).subscribe(
         response => {this.ngOnInit()},
         error => {console.error('error rating the movie',error);}
@@ -78,7 +86,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   addToWatchList(){   
-    if(this.username){ 
+    if(this.username && this.user){ 
       this.interactionService.addToWatchList(this.user.userId,this.movieId,'movie').subscribe(
         response => {console.log('added to watch list successfully',this.user);
         },
@@ -91,7 +99,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   removeFromWatchList(){
-    if(this.username){
+    if(this.username && this.user){
       this.interactionService.removeFromWatchList(this.user.userId,this.movieId).subscribe(
         response => {console.log('removed from watch list successfully',this.user);
         },
@@ -104,7 +112,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   addToFavorite(){
-    if(this.username){
+    if(this.username && this.user){
       this.interactionService.addToFavorite(this.user.userId,this.movieId,'movie').subscribe(
         response => {console.log('added to favorite successfully',response);
         },
@@ -117,7 +125,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   removeFromFavorite(){
-    if(this.username){
+    if(this.username && this.user){
       this.interactionService.removeFromFavorite(this.user.userId,this.movieId).subscribe(
         response => {console.log('removed from favorite successfully',response);
         },

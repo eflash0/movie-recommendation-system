@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { NavigationBarComponent } from "../../navigation-bar/navigation-bar.component";
 import { FooterComponent } from "../../footer/footer.component";
+import { Movie } from '../../model/movie';
 
 @Component({
   selector: 'app-get-movies',
@@ -13,7 +14,7 @@ import { FooterComponent } from "../../footer/footer.component";
   styleUrl: './get-movies.component.css'
 })
 export class GetMoviesComponent implements OnInit {
-  movies : any = [];
+  movies : Movie[] = [];
   page : number = 1;
   loading: boolean = false;
   constructor(private movieService : MovieService,private router : Router){ }

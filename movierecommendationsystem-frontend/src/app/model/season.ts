@@ -2,22 +2,22 @@ export class Episode {
     constructor(
         public id: number,
         public name: string,
-        public episodeNumber: number,
+        public episode_number: number,
         public overview: string,
-        public airDate: Date,
-        public seasonNumber: number
+        public air_date: Date,
+        public still_path: string
     ) {}
 }
 
 export class Season {
     constructor(
         public id: number,
-        public seasonNumber: number,
+        public season_number: number,
         public name: string,
-        public episodeCount: number,
+        public episode_count: number,
         public overview: string,
-        public posterPath: string,
-        public airDate: Date,
-        public episodes: Episode[] = [] // Default to an empty array
+        public poster_path: string,
+        public air_date: Date,
+        public episodes: Episode[] = []
     ) {}
 }

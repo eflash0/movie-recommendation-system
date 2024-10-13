@@ -1,5 +1,7 @@
 package com.movierecommendationsystem.movierecommendationsystem_backend.dto;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -16,6 +18,8 @@ public class Episode {
     private String name;
     @JsonProperty("overview")
     private String overview;
+    @JsonProperty("air_date")
+    private Date airDate;
     @JsonProperty("still_path")
     private String stillPath;
 }

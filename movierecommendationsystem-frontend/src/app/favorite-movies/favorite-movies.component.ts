@@ -8,6 +8,7 @@ import { InteractionService } from '../service/interaction.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { General } from '../model/generalInfo';
 
 @Component({
   selector: 'app-favorite-movies',
@@ -17,7 +18,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrl: './favorite-movies.component.css'
 })
 export class FavoriteMoviesComponent implements OnInit {
-  favorite : any = [];
+  favorite : General[] = [];
   username : string = '';
   user : any;
   constructor(private userService : UserService,private authService : AuthService,

@@ -45,7 +45,7 @@ public class TvShowController {
     @GetMapping("/{tvShowId}/seasons/{seasonNumber}")
     public ResponseEntity<SeasonDto> getSeasonDetail(@PathVariable Long tvShowId,
     @PathVariable int seasonNumber){
-        SeasonDto season = tvShowService.getTvShowSeasonDetails(seasonNumber, seasonNumber);
+        SeasonDto season = tvShowService.getTvShowSeasonDetails(tvShowId, seasonNumber);
         return ResponseEntity.ok(season);
     }
 }

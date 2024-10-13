@@ -8,15 +8,18 @@ import { FavoriteMoviesComponent } from './favorite-movies/favorite-movies.compo
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { GetTvShowsComponent } from './tv-shows/get-tv-shows/get-tv-shows.component';
 import { TvShowDetailsComponent } from './tv-shows/tv-show-details/tv-show-details.component';
+import { SeasonDetailsComponent } from './tv-shows/season-details/season-details.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {path : 'movies', component : GetMoviesComponent},
     {path : 'movies/:id', component : MovieDetailsComponent},
     {path : 'login', component : LoginComponent},
     {path : 'signup', component : RegistrationComponent},
-    {path : 'watchlist', component : WatchListComponent},
-    {path : 'favorite', component : FavoriteMoviesComponent},
+    {path : 'watchlist', component : WatchListComponent,canActivate:[authGuard]},
+    {path : 'favorite', component : FavoriteMoviesComponent,canActivate:[authGuard]},
     {path : 'searchResults', component : SearchResultsComponent},
     {path : 'tv-shows', component : GetTvShowsComponent},
-    {path : 'tv-shows/:id', component : TvShowDetailsComponent}
+    {path : 'tv-shows/:id', component : TvShowDetailsComponent},
+    {path : 'tv-shows/:tvShowId/seasons/:seasonNumber', component : SeasonDetailsComponent}
 ];
