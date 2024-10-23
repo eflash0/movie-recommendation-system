@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.Media;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.RecommendationService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +29,9 @@ public class RecommendationController {
 
     // Endpoint to get recommendations for a user
     @PostMapping("/get-recommendations")
-    public ResponseEntity<List<Long>> getRecommendations(@RequestParam Long userId) {
+    public ResponseEntity<List<Media>> getRecommendations(@RequestParam Long userId) {
         log.info("--------------------userId : "+userId);
-        List<Long> recommendations = recommendationService.getRecommendations(userId);
+        List<Media> recommendations = recommendationService.getRecommendations(userId);
         return ResponseEntity.ok(recommendations);
     }
 }

@@ -37,13 +37,14 @@ public class InteractionService {
         .map(interaction, InteractionDto.class)).toList();
     } 
 
-    public InteractionDto rateMedia(Long userId,Long mediaId,double rating){
+    public InteractionDto rateMedia(Long userId,Long mediaId,double rating,String type){
         User user = userRepository.findById(userId).orElseThrow(() -> 
         new IllegalArgumentException("user not found")); 
         Interaction interaction = interactionRepository.findByUserAndMediaId(user, mediaId).orElse(new Interaction());
         interaction.setUser(user);
         interaction.setMediaId(mediaId);
         interaction.setRating(rating);
+        interaction.setMediaType(MediaType.fromValue(type));
         Interaction savedInteraction = interactionRepository.save(interaction);  
         return modelMapper.map(savedInteraction, InteractionDto.class);
     }

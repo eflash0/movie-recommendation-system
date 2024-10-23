@@ -37,8 +37,8 @@ public class InteractionController {
 
     @PostMapping("/{userId}/{mediaId}/rating")
     public ResponseEntity<InteractionDto> rateMovie(@PathVariable Long userId,
-    @PathVariable Long mediaId,@RequestParam double rating){
-        InteractionDto interaction = interactionService.rateMedia(userId, mediaId,rating);
+    @PathVariable Long mediaId,@RequestParam double rating, @RequestParam String type){
+        InteractionDto interaction = interactionService.rateMedia(userId,mediaId,rating,type);
         return ResponseEntity.ok(interaction);
     }    
 

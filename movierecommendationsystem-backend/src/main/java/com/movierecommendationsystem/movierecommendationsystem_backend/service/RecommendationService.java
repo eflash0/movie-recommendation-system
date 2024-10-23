@@ -14,13 +14,19 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Collections;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.InteractionDto;
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.Media;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
+import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TvShowDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Interaction;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.User;
 import com.movierecommendationsystem.movierecommendationsystem_backend.repository.InteractionRepository;
+import com.movierecommendationsystem.movierecommendationsystem_backend.repository.UserRepository;
 
 @Service
 public class RecommendationService {
@@ -28,6 +34,12 @@ public class RecommendationService {
     private InteractionRepository interactionRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private MovieService movieService;
+    @Autowired
+    private TvShowService tvShowService;
 
     private final String pythonUrl = "http://localhost:5000";
 
@@ -40,7 +52,7 @@ public class RecommendationService {
         restTemplate.postForObject(url, interactionsDto, Void.class);
     }
 
-    public List<Long> getRecommendations(Long userId) {
+    public List<Media> getRecommendations(Long userId) {
         String url = pythonUrl + "/recommend";
         RestTemplate restTemplate = new RestTemplate();
     
@@ -62,8 +74,31 @@ public class RecommendationService {
             );
     
             // Return the body which contains the list of movie IDs
-            return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
+            List<Long> mediaIds = responseEntity.getBody();
+            Optional<User> user = userRepository.findById(userId);
+            List<Media> medias = new ArrayList<>();
+            for(Long id : mediaIds){
+                // Interaction interaction = interactionRepository.findByMediaId(id).get(0);
+                // if(interaction.getMediaType().getValue().equalsIgnoreCase("movie")){
+                //     MovieDto movieDto = movieService.getMovieDetails(id);
+                //     medias.add(movieDto);
+                // }
+                // else if(interaction.getMediaType().getValue().equalsIgnoreCase("tv show")){
+                //     TvShowDto tvShowDto = tvShowService.getTvShowDetails(id);
+                //     medias.add(tvShowDto);
+                // }
+                try{
+                    MovieDto movieDto = movieService.getMovieDetails(id);
+                    medias.add(movieDto);
+                }
+                catch(Exception e){
+                    TvShowDto tvShowDto = tvShowService.getTvShowDetails(id);
+                    medias.add(tvShowDto);
+                }
+            }
+            return medias;
+        } 
+        catch (HttpClientErrorException e) {
             // Log the error and return an empty list if something goes wrong
             System.err.println("Error during HTTP request: " + e.getMessage());
             return Collections.emptyList();  // Or handle it as needed
