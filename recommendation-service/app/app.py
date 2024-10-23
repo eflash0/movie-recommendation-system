@@ -1,11 +1,39 @@
 from flask import Flask, request, jsonify
 from model.recommendation_model import train_model,get_recommendation_for_user
 import pandas as pd
+import pickle
+import os
 
 app = Flask(__name__)
 
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Paths for saving the model
+MODEL_DIR = os.path.join(CURRENT_DIR, "pre-trained_model")
+SIMILARITY_MODEL_PATH = os.path.join(MODEL_DIR, "similarity_df.pkl")
+USER_ITEM_MATRIX_PATH = os.path.join(MODEL_DIR, "user_item_matrix.pkl")
+
 similarity_df = None
 user_item_matrix = None
+
+def save_model(similarity_df,user_item_matrix) : 
+    with open(SIMILARITY_MODEL_PATH, 'wb') as sim_file:
+        pickle.dump(similarity_df, sim_file)
+    with open(USER_ITEM_MATRIX_PATH, 'wb') as uim_file:
+        pickle.dump(user_item_matrix, uim_file)
+    print("model saved to files")
+
+def load_model():
+    global similarity_df,user_item_matrix
+
+    if os.path.exists(SIMILARITY_MODEL_PATH) and os.path.exists(USER_ITEM_MATRIX_PATH):
+        with open(SIMILARITY_MODEL_PATH, 'rb') as sim_file:
+            similarity_df = pickle.load(sim_file)
+        with open(USER_ITEM_MATRIX_PATH, 'rb') as uim_file:
+            user_item_matrix = pickle.load(uim_file)    
+        print("model loaded from files")
+    else:
+        print("no pre-trained model found")                 
 
 @app.route('/train', methods=['POST'])
 def train():
@@ -18,6 +46,7 @@ def train():
         pd.set_option('display.max_columns', None)
         print(similarity_df)
         print(user_item_matrix)
+        save_model(similarity_df,user_item_matrix)
         return jsonify({"message": "Model trained successfully"}), 200
     else:
         return jsonify({"error": "No interactions provided"}), 400
@@ -42,4 +71,5 @@ def recommend():
     return jsonify(recommendations)
 
 if __name__ == '__main__':
+    load_model()
     app.run(port=5000)
