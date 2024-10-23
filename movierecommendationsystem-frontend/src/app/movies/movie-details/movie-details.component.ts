@@ -75,7 +75,7 @@ export class MovieDetailsComponent implements OnInit {
 
   rateMovie(){
     if(this.username && this.user){
-      this.interactionService.rate(this.user.userId,this.movieId,this.userRating).subscribe(
+      this.interactionService.rate(this.user.userId,this.movieId,this.userRating,'movie').subscribe(
         response => {this.ngOnInit()},
         error => {console.error('error rating the movie',error);}
       );

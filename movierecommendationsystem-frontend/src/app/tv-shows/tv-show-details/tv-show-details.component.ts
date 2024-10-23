@@ -158,7 +158,7 @@ export class TvShowDetailsComponent implements OnInit {
 
   rateTvShow(){
     if(this.username && this.user){
-      this.interactionService.rate(this.user.userId,this.tvShowId,this.userRating).subscribe(
+      this.interactionService.rate(this.user.userId,this.tvShowId,this.userRating,'tv show').subscribe(
         response => {this.ngOnInit()},
         error => {console.error('error rating the movie',error);}
       );

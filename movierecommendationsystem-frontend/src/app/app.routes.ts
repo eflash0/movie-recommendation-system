@@ -11,6 +11,7 @@ import { TvShowDetailsComponent } from './tv-shows/tv-show-details/tv-show-detai
 import { SeasonDetailsComponent } from './tv-shows/season-details/season-details.component';
 import { authGuard } from './guards/auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { RecommendationsComponent } from './recommendations/recommendations.component';
 
 export const routes: Routes = [
     {path : 'movies', component : GetMoviesComponent},
@@ -23,5 +24,6 @@ export const routes: Routes = [
     {path : 'tv-shows', component : GetTvShowsComponent},
     {path : 'tv-shows/:id', component : TvShowDetailsComponent},
     {path : 'tv-shows/:tvShowId/seasons/:seasonNumber', component : SeasonDetailsComponent},
+    {path : 'recommendations', component : RecommendationsComponent,canActivate:[authGuard]},
     {path : '**', component : NotFoundComponent}
 ];

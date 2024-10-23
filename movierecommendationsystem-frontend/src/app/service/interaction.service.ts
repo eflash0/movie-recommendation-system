@@ -10,10 +10,10 @@ export class InteractionService {
 
   constructor(private http :HttpClient) { }
 
-  rate(userId : number,mediaId : number,rating : number) : Observable<any>{
+  rate(userId : number,mediaId : number,rating : number,type : string) : Observable<any>{
     const url = `${this.baseUrl}/${userId}/${mediaId}/rating`;
     const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
-    const params = new HttpParams().set('rating',rating.toString());
+    const params = new HttpParams().set('rating',rating.toString()).set('type',type);
     return this.http.post<any>(url,{},{headers,params});
   }
 

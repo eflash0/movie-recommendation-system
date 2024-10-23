@@ -9,6 +9,7 @@ import { FooterComponent } from "../footer/footer.component";
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { General } from '../model/generalInfo';
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-watch-list',
@@ -20,7 +21,7 @@ import { General } from '../model/generalInfo';
 export class WatchListComponent implements OnInit {
   watchList : General[] = [];
   username : string = '';
-  user : any;
+  user : User | null = null;
   constructor(private userService : UserService,private authService : AuthService,
     private interactionService : InteractionService, private router : Router,
     private dialog : MatDialog
@@ -33,10 +34,12 @@ export class WatchListComponent implements OnInit {
         this.userService.findByUsename(this.username).subscribe(
           response => {
             this.user = response;
-            this.interactionService.watchList(this.user.userId).subscribe(
-              response => {this.watchList = response;},
-              error => {console.error('error fetching watch list',error);}
-            );
+            if(this.user){
+              this.interactionService.watchList(this.user.userId).subscribe(
+                response => {this.watchList = response;},
+                error => {console.error('error fetching watch list',error);}
+              );
+            }          
           },
           error => {console.error('error fetching user',error);}
         );
@@ -50,7 +53,7 @@ export class WatchListComponent implements OnInit {
       data : {message : 'Are you sure you want to remove this movie from your watch list?'}});
     dialogRef.afterClosed().subscribe(
       response => {
-        if(response){
+        if(response && this.user){
           this.interactionService.removeFromWatchList(this.user.userId,movieId).subscribe(
             response => {this.ngOnInit();},
             error => {console.error('error deleting movie from watch list',error);}

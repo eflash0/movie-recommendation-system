@@ -8,12 +8,13 @@
                 <a [routerLink]="['/tv-shows']" class="text-white hover:text-blue-400 transition duration-300">TV Shows</a>
                 <a  (click)="watchList()" class="text-white hover:text-blue-400 transition duration-300 cursor-pointer">Watch list</a>
                 <a (click)="favorite()" class="text-white hover:text-blue-400 transition duration-300 cursor-pointer">Favorite</a>
+                <a (click)="recommendations()" class="text-white hover:text-blue-400 transition duration-300 cursor-pointer">Recommendations</a>
             </nav>
         </div>
         <div class="flex items-center space-x-4">
             <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="searchMovies()" placeholder="Search..." class="p-2 rounded bg-gray-700 text-white focus:outline-none transition duration-300 focus:ring-2 focus:ring-blue-500">
             <a *ngIf="login === true" (click)="logout()" class="text-white hover:text-blue-400 transition duration-300 cursor-pointer">Logout</a>
-            <a *ngIf="login === false" href="/login" class="text-white hover:text-blue-400 transition duration-300 cursor-pointer">Login</a>
+            <a *ngIf="login === false" [routerLink]="['/login']" class="text-white hover:text-blue-400 transition duration-300 cursor-pointer">Login</a>
         </div>
     </div>
 </header>

@@ -28,7 +28,8 @@ export class NavigationBarComponent implements OnInit {
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('role');
-    this.router.navigate(['/login']);
+    this.login = false;
+    this.router.navigate(['/movies']);
   }
 
   searchMovies(){
@@ -38,20 +39,14 @@ export class NavigationBarComponent implements OnInit {
   }
   
   watchList(){
-    if(this.login){
-      this.router.navigate(['/watchlist']);
-    }
-    else{
-      this.router.navigate(['/login']);
-    }
+    this.router.navigate(['/watchlist']);
   }
 
   favorite(){
-    if(this.login){
-      this.router.navigate(['/favorite']);
-    }
-    else{
-      this.router.navigate(['/login']);
-    }
+    this.router.navigate(['/favorite']);
+  }
+
+  recommendations(){
+    this.router.navigate(['/recommendations']);
   }
 }
