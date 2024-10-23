@@ -2,43 +2,20 @@ package com.movierecommendationsystem.movierecommendationsystem_backend.entity;
 
 import java.util.List;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "movies")
-@NoArgsConstructor
 @Getter
 @Setter
-public class Movie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long movieId;
+@NoArgsConstructor
+public class Movie extends Media {
 
-    @Column(nullable = false)
+    @JsonProperty("title")
     private String title;
 
-    @Column(length = 1000)
-    private String overview;
-
+    @JsonProperty("release_date")
     private String releaseDate;
-
-    private String posterPath;
-
-    private Double popularity;
-
-    private Double voteAverage;
-
-    private Long tmdbId;
-
-    @ManyToMany
-    @JoinTable(name = "movie_genre",
-        joinColumns = @JoinColumn(name = "movie_id"),
-        inverseJoinColumns = @JoinColumn(name = "genre_id"),
-        uniqueConstraints = @UniqueConstraint(columnNames = {"movie_id","genre_id"})
-    )
-    private List<Genre> genres;
-
 }

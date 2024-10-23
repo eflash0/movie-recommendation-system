@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.InteractionDto;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.Media;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TvShowDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Interaction;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Media;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MediaType;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Movie;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.TvShow;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.User;
 import com.movierecommendationsystem.movierecommendationsystem_backend.repository.InteractionRepository;
 import com.movierecommendationsystem.movierecommendationsystem_backend.repository.UserRepository;
@@ -95,11 +95,11 @@ public class InteractionService {
         for(Interaction interaction : interactions) {
             if(!interaction.isWatchList()) continue;
             if("movie".equalsIgnoreCase(interaction.getMediaType().getValue())) {
-                MovieDto movieDto = movieService.getMovieDetails(interaction.getMediaId());
+                Movie movieDto = movieService.getMovieDetails(interaction.getMediaId());
                 mediaList.add(movieDto);
             } 
             else if("tv show".equalsIgnoreCase(interaction.getMediaType().getValue())) {
-                TvShowDto tvShowDto = tvShowService.getTvShowDetails(interaction.getMediaId());
+                TvShow tvShowDto = tvShowService.getTvShowDetails(interaction.getMediaId());
                 mediaList.add(tvShowDto);
             }
         }
@@ -125,11 +125,11 @@ public class InteractionService {
         for(Interaction interaction : interactions) {
             if(!interaction.isFavorite()) continue;
             if("movie".equalsIgnoreCase(interaction.getMediaType().getValue())) {
-                MovieDto movieDto = movieService.getMovieDetails(interaction.getMediaId());
+                Movie movieDto = movieService.getMovieDetails(interaction.getMediaId());
                 mediaList.add(movieDto);
             } 
             else if("tv show".equalsIgnoreCase(interaction.getMediaType().getValue())) {
-                TvShowDto tvShowDto = tvShowService.getTvShowDetails(interaction.getMediaId());
+                TvShow tvShowDto = tvShowService.getTvShowDetails(interaction.getMediaId());
                 mediaList.add(tvShowDto);
             }
         }

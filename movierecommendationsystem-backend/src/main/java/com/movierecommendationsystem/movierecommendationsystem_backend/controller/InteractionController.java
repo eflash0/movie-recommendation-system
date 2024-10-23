@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.InteractionDto;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.Media;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Media;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.InteractionService;
 
 @RestController

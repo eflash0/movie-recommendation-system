@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from model.recommendation_model import train_model,get_recommendation_for_user
+from recommendation_model import train_model,get_recommendation_for_user
 import pandas as pd
 import pickle
 import os
@@ -9,7 +9,7 @@ app = Flask(__name__)
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Paths for saving the model
-MODEL_DIR = os.path.join(CURRENT_DIR, "pre-trained_model")
+MODEL_DIR = os.path.join(CURRENT_DIR, '..', "pre-trained_model")
 SIMILARITY_MODEL_PATH = os.path.join(MODEL_DIR, "similarity_df.pkl")
 USER_ITEM_MATRIX_PATH = os.path.join(MODEL_DIR, "user_item_matrix.pkl")
 
@@ -59,15 +59,11 @@ def recommend():
     if similarity_df is None or user_item_matrix is None:
         return jsonify({"error": "Model not trained. Please call /train endpoint first."}), 400
 
-    # Step 3: Get the user ID from query parameters or request data
-    # user_id = int(request.args.get('userId'))  # Assuming userId is passed as a query parameter
     user_id = int(request.json['userId'])
 
-    print("regkpoerkpgoergkperkgrg",user_id)
-    # Step 4: Generate recommendations by passing the similarity matrix and the user-item matrix
+    print("---------------------",user_id)
     recommendations = get_recommendation_for_user(similarity_df, user_id, user_item_matrix)
     print(recommendations)
-    # Step 5: Return the recommendations as a JSON response
     return jsonify(recommendations)
 
 if __name__ == '__main__':

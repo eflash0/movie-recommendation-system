@@ -31,18 +31,11 @@ export class RecommendationsComponent implements OnInit {
         this.userService.findByUsename(this.username).subscribe(
           response => {this.user = response;
             if(this.user){
-              this.recommendationService.train().subscribe(
-                response => {
-                  if(this.user){
-                    this.recommendationService.getRecommendations(this.user.userId).subscribe(
-                      response => {this.medias = response;
-                        this.loading = false;
-                      },
-                      error => {console.error('error fetching recommendations',error);}
-                    );
-                  }   
+              this.recommendationService.getRecommendations(this.user.userId).subscribe(
+                response => {this.medias = response;
+                  this.loading = false;
                 },
-                error => {console.error(error);}
+                error => {console.error('error fetching recommendations',error);}
               );
             }
           },

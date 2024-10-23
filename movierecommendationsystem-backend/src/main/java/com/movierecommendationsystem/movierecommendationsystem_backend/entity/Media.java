@@ -1,10 +1,16 @@
-package com.movierecommendationsystem.movierecommendationsystem_backend.dto;
+package com.movierecommendationsystem.movierecommendationsystem_backend.entity;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Genre;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class Media {
     @JsonProperty("id")
     private Long id;

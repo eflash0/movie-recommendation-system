@@ -26,7 +26,6 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
-
     public LoginResponse login(LoginDto login){
         try{
             Optional<User> user = userRepository.findByEmail(login.getUsername());

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.SeasonDto;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TvShowDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MediaVideo;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.TvShow;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.TvShowService;
 
 
@@ -25,14 +25,14 @@ public class TvShowController {
     private TvShowService tvShowService;
 
     @GetMapping
-    public ResponseEntity<List<TvShowDto>> getPopularTvShows(@RequestParam(defaultValue = "1") int page){
-        List<TvShowDto> TvShows = tvShowService.getPopularTvShows(page);
+    public ResponseEntity<List<TvShow>> getPopularTvShows(@RequestParam(defaultValue = "1") int page){
+        List<TvShow> TvShows = tvShowService.getPopularTvShows(page);
         return ResponseEntity.ok(TvShows);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TvShowDto> getTvShowDetails(@PathVariable Long id){
-        TvShowDto TvShow = tvShowService.getTvShowDetails(id);
+    public ResponseEntity<TvShow> getTvShowDetails(@PathVariable Long id){
+        TvShow TvShow = tvShowService.getTvShowDetails(id);
         return ResponseEntity.ok(TvShow);
     }
 

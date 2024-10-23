@@ -10,9 +10,9 @@ import com.movierecommendationsystem.movierecommendationsystem_backend.dto.Seaso
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbMovieResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbTvShowResponse;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TMDbVideosResponse;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TvShowDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Genre;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MediaVideo;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.TvShow;
 
 @Service
 public class TvShowService {
@@ -30,15 +30,15 @@ public class TvShowService {
         this.restTemplate = restTemplate;
     }
 
-    public List<TvShowDto> getPopularTvShows(int page) {
+    public List<TvShow> getPopularTvShows(int page) {
         String url = String.format(POPULAR_TV_SHOWS_URL, apiKey, page);
         TMDbTvShowResponse response = restTemplate.getForObject(url, TMDbTvShowResponse.class);
         return response.getResults();
     }
 
-    public TvShowDto getTvShowDetails(Long tvShowId) {
+    public TvShow getTvShowDetails(Long tvShowId) {
         String url = String.format(TV_SHOW_DETAILS_URL, tvShowId, apiKey);
-        return restTemplate.getForObject(url, TvShowDto.class);
+        return restTemplate.getForObject(url, TvShow.class);
     }
 
     public List<Genre> getTvShowGenres() {

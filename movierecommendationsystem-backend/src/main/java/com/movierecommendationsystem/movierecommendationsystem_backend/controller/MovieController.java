@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.SearchResult;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.MediaVideo;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Movie;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.MovieService;
 
 import java.util.List;
@@ -22,14 +22,14 @@ public class MovieController {
     private MovieService movieService;
 
     @GetMapping
-    public ResponseEntity<List<MovieDto>> getPopularMovies(@RequestParam(defaultValue = "1") int page){
-        List<MovieDto> movies = movieService.getPopularMovies(page);
+    public ResponseEntity<List<Movie>> getPopularMovies(@RequestParam(defaultValue = "1") int page){
+        List<Movie> movies = movieService.getPopularMovies(page);
         return ResponseEntity.ok(movies);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDto> getMovieDetails(@PathVariable Long id){
-        MovieDto movie = movieService.getMovieDetails(id);
+    public ResponseEntity<Movie> getMovieDetails(@PathVariable Long id){
+        Movie movie = movieService.getMovieDetails(id);
         return ResponseEntity.ok(movie);
     }
 

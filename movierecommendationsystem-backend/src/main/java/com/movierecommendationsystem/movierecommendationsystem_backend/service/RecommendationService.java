@@ -20,10 +20,10 @@ import java.util.Optional;
 import java.util.Collections;
 
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.InteractionDto;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.Media;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.MovieDto;
-import com.movierecommendationsystem.movierecommendationsystem_backend.dto.TvShowDto;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Interaction;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Media;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Movie;
+import com.movierecommendationsystem.movierecommendationsystem_backend.entity.TvShow;
 import com.movierecommendationsystem.movierecommendationsystem_backend.entity.User;
 import com.movierecommendationsystem.movierecommendationsystem_backend.repository.InteractionRepository;
 import com.movierecommendationsystem.movierecommendationsystem_backend.repository.UserRepository;
@@ -88,11 +88,11 @@ public class RecommendationService {
                 //     medias.add(tvShowDto);
                 // }
                 try{
-                    MovieDto movieDto = movieService.getMovieDetails(id);
+                    Movie movieDto = movieService.getMovieDetails(id);
                     medias.add(movieDto);
                 }
                 catch(Exception e){
-                    TvShowDto tvShowDto = tvShowService.getTvShowDetails(id);
+                    TvShow tvShowDto = tvShowService.getTvShowDetails(id);
                     medias.add(tvShowDto);
                 }
             }
