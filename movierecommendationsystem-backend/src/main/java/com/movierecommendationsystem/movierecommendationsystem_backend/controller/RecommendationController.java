@@ -1,6 +1,7 @@
 package com.movierecommendationsystem.movierecommendationsystem_backend.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,9 @@ public class RecommendationController {
     private RecommendationService recommendationService;
 
     @PostMapping("/train")
-    public ResponseEntity<Void> trainModel() {
-        recommendationService.trainRecommendationModel();
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Map<String,String>> trainModel() {
+        Map<String,String> response = recommendationService.trainRecommendationModel();
+        return ResponseEntity.ok(response);
     }
 
     // Endpoint to get recommendations for a user

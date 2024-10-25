@@ -2,6 +2,7 @@ package com.movierecommendationsystem.movierecommendationsystem_backend.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -40,16 +41,18 @@ public class RecommendationService {
     private MovieService movieService;
     @Autowired
     private TvShowService tvShowService;
+    
+    @Value("${recommendation.url}")
+    private String pythonUrl;
 
-    private final String pythonUrl = "http://localhost:5000";
-
-    public void trainRecommendationModel(){
+    public Map<String,String> trainRecommendationModel(){
         String url = pythonUrl + "/train";
         List<Interaction> interactions = interactionRepository.findAll();
         List<InteractionDto> interactionsDto = interactions.stream().map(interaction ->
             modelMapper.map(interaction,InteractionDto.class)).toList();
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject(url, interactionsDto, Void.class);
+        Map<String,String> response = restTemplate.postForObject(url, interactionsDto, Map.class);
+        return response;
     }
 
     public List<Media> getRecommendations(Long userId) {

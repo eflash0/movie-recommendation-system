@@ -1,9 +1,9 @@
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY target/*.jar /app/app.jar
+COPY target/*.jar /app/movierecommendationsystem-backend.jar
 
 EXPOSE 8082
 
-CMD ["java", "jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/movierecommendationsystem-backend.jar"]

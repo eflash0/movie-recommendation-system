@@ -4,10 +4,10 @@ WORKDIR /recommendation
 
 COPY . /recommendation/
 
-RUN pip install --no-cache-dir -r requirements-txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
 
 ENV NAME env
 
-CMD [ "python" , "recommendation/app/app.py"]
+CMD [ "python" , "app/app.py"]
