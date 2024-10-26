@@ -29,7 +29,10 @@ import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Us
 import com.movierecommendationsystem.movierecommendationsystem_backend.repository.InteractionRepository;
 import com.movierecommendationsystem.movierecommendationsystem_backend.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class RecommendationService {
     @Autowired
     private InteractionRepository interactionRepository;
@@ -56,6 +59,7 @@ public class RecommendationService {
     }
 
     public List<Media> getRecommendations(Long userId) {
+        log.info("-----------------------"+pythonUrl);
         String url = pythonUrl + "/recommend";
         RestTemplate restTemplate = new RestTemplate();
     

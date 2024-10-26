@@ -13,7 +13,7 @@ export class MovieService {
   getPopularMovies(page : number) : Observable<any>{
     const url = `${this.baseUrl}?page=${page}`;
     const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
-    return this.http.get<any>(url);
+    return this.http.get<any>(url, { headers });
   }
 
   getMovieDetails(id:number) : Observable<any>{

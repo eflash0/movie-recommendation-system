@@ -2,6 +2,7 @@ package com.movierecommendationsystem.movierecommendationsystem_backend.security
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.movierecommendationsystem.movierecommendationsystem_backend.entity.Role;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.UserService;
 
 import lombok.AllArgsConstructor;
@@ -31,13 +31,13 @@ public class WebSecurity {
         http.
             csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/admins/**").permitAll()//hasAuthority(Role.ADMIN.name())
+                .requestMatchers("/interactions/**").authenticated()
+                .requestMatchers("/recommendation/**").authenticated()
                 .anyRequest().permitAll()
             )
             .oauth2Login(oauth2 -> oauth2
-                .successHandler(customOAuth2SuccessHandler)  // Use the custom success handler
-                .failureUrl("/auth/oauth2/failure")  // Handle OAuth2 failure
+                .successHandler(customOAuth2SuccessHandler)
+                .failureUrl("/auth/oauth2/failure")
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

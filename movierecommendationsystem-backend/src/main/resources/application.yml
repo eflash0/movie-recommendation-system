@@ -2,7 +2,7 @@ spring:
   application:
     name: movierecommendationsystem-backend
   datasource:
-    url: jdbc:postgresql://database:5432/movierecommendation
+    url: jdbc:postgresql://localhost:5432/movierecommendation
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
