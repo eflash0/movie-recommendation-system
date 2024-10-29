@@ -12,26 +12,26 @@ export class MovieService {
 
   getPopularMovies(page : number) : Observable<any>{
     const url = `${this.baseUrl}?page=${page}`;
-    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`);
     return this.http.get<any>(url, { headers });
   }
 
   getMovieDetails(id:number) : Observable<any>{
     const url = `${this.baseUrl}/${id}`;
-    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`);
     return this.http.get<any>(url);
   }
 
   getMovieTrailer(id:number) : Observable<any>{
     const url = `${this.baseUrl}/${id}/trailer`;
-    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`);
     return this.http.get<any>(url);
   }
 
   search(query : string, page : number) : Observable<any>{
     const url = `${this.baseUrl}/search`;
     const params = new HttpParams().set('query',query).set('page',page.toString());
-    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`);
     return this.http.get<any>(url,{ params });
   }
 }

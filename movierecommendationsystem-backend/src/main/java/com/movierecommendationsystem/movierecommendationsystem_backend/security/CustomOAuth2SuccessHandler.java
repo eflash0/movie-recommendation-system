@@ -3,7 +3,6 @@ package com.movierecommendationsystem.movierecommendationsystem_backend.security
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.movierecommendationsystem.movierecommendationsystem_backend.dto.LoginResponse;
-import com.movierecommendationsystem.movierecommendationsystem_backend.service.AuthService;
 import com.movierecommendationsystem.movierecommendationsystem_backend.service.OAuth2LoginService;
 
 import jakarta.servlet.ServletException;

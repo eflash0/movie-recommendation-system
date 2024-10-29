@@ -31,8 +31,8 @@ public class WebSecurity {
         http.
             csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/interactions/**").authenticated()
-                .requestMatchers("/recommendation/**").authenticated()
+                // .requestMatchers("/interactions/**").authenticated()
+                // .requestMatchers("/recommendation/**").authenticated()
                 .anyRequest().permitAll()
             )
             .oauth2Login(oauth2 -> oauth2

@@ -21,12 +21,14 @@ import lombok.AllArgsConstructor;
 public class JwtTokenFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
     private UserDetailsService userDetailsService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         final String requestTokenHeader = request.getHeader("Authorization");
         String username = null;
         String jwtToken = null;
+
         if(requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")){
             jwtToken = requestTokenHeader.substring(7);
             try{
@@ -42,14 +44,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         else{
             logger.warn("JWT doesnt begin with Bearer");
         }
+
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if(jwtUtil.validateToken(jwtToken)){
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                     new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);    
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken); 
             }
         }
         filterChain.doFilter(request, response);
     }
+
+
 }
+

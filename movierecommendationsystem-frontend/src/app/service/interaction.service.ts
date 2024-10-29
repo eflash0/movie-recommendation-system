@@ -12,14 +12,15 @@ export class InteractionService {
 
   rate(userId : number,mediaId : number,rating : number,type : string) : Observable<any>{
     const url = `${this.baseUrl}/${userId}/${mediaId}/rating`;
-    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`);
     const params = new HttpParams().set('rating',rating.toString()).set('type',type);
     return this.http.post<any>(url,{},{headers,params});
   }
 
   watchList(userId : number) : Observable<any>{
     const url = `${this.baseUrl}/${userId}/watchlist`;
-    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    console.log(localStorage.getItem('token'));
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`);
     return this.http.get<any>(url,{ headers });
   }
 
@@ -49,13 +50,13 @@ export class InteractionService {
 
   favorite(userId : number) : Observable<any>{
     const url = `${this.baseUrl}/${userId}/favorite`;
-    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`);
     return this.http.get<any>(url,{ headers });
   }
 
   findInteraction(userId: number, mediaId: number) : Observable<any>{
     const url = `${this.baseUrl}/${userId}/${mediaId}`;
-    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`);
     return this.http.get<any>(url,{ headers });
   }
   
